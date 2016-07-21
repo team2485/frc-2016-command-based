@@ -1,12 +1,19 @@
 package org.usfirst.frc.team2485.robot;
 
+import org.usfirst.frc.team2485.robot.subsystems.DriveTrain;
 import org.usfirst.frc.team2485.robot.subsystems.IntakeArm;
 import org.usfirst.frc.team2485.robot.subsystems.IntakeRollers;
+import org.usfirst.frc.team2485.util.EncoderWrapperRateAndDistance;
 import org.usfirst.frc.team2485.util.InvertedAbsoluteEncoder;
 import org.usfirst.frc.team2485.util.SpeedControllerWrapper;
 
+import com.kauailabs.navx.frc.AHRS;
+
 import edu.wpi.first.wpilibj.AnalogPotentiometer;
-import edu.wpi.first.wpilibj.Victor;
+import edu.wpi.first.wpilibj.Encoder;
+import edu.wpi.first.wpilibj.PIDSourceType;
+import edu.wpi.first.wpilibj.SPI;
+import edu.wpi.first.wpilibj.VictorSP;
 
 /**
  * The RobotMap is a mapping from the ports sensors and actuators are wired into
@@ -31,12 +38,35 @@ public class RobotMap {
 	
 	public static IntakeRollers intakeRollers = new IntakeRollers();
 	public static IntakeArm intakeArm = new IntakeArm();
+	public static DriveTrain driveTrain = new DriveTrain();
 	
-	public static Victor intakeRollerLateralsc = new Victor(scIntakeRollerPort1);
-	public static Victor intakeRollerIntakesc = new Victor(scIntakeRollerPort2);
-	public static Victor intakeArmVictor = new Victor(scIntakeArmPort1);
+	public static VictorSP intakeRollerLateralsc = new VictorSP(scIntakeRollerPort1);
+	public static VictorSP intakeRollerIntakesc = new VictorSP(scIntakeRollerPort2);
+	public static VictorSP intakeArmVictorSP = new VictorSP(scIntakeArmPort1);
+	public static VictorSP[] rightDriveVictorSPs = {
+													new VictorSP(5), new VictorSP(6), new VictorSP(7)
+													};
+	public static VictorSP[] leftDriveVictorSPs = {
+			new VictorSP(2), new VictorSP(3), new VictorSP(4)
+			};
 	
-	public static SpeedControllerWrapper intakeArmSC = new SpeedControllerWrapper(intakeArmVictor);
+	public static SpeedControllerWrapper intakeArmSC = new SpeedControllerWrapper(intakeArmVictorSP);
+	public static SpeedControllerWrapper rightDrive = new SpeedControllerWrapper(rightDriveVictorSPs);
+	public static SpeedControllerWrapper leftDrive = new SpeedControllerWrapper(leftDriveVictorSPs);
 	
 	public static InvertedAbsoluteEncoder intakeAbsEncoder = new InvertedAbsoluteEncoder(new AnalogPotentiometer(0));
+	
+	public static Encoder leftDriveEnc = new Encoder(3, 2);
+	public static Encoder rightDriveEnc = new Encoder(4, 5);
+	
+	public static EncoderWrapperRateAndDistance leftDistEncoder = new EncoderWrapperRateAndDistance(leftDriveEnc, PIDSourceType.kDisplacement);
+	public static EncoderWrapperRateAndDistance leftRateEncoder = new EncoderWrapperRateAndDistance(leftDriveEnc, PIDSourceType.kRate);
+	public static EncoderWrapperRateAndDistance rightDistEncoder = new EncoderWrapperRateAndDistance(rightDriveEnc, PIDSourceType.kDisplacement);
+	public static EncoderWrapperRateAndDistance rightRateEncoder = new EncoderWrapperRateAndDistance(rightDriveEnc, PIDSourceType.kRate);
+	
+	public static AHRS ahrs = new AHRS(SPI.Port.kMXP);
+
+
+
+	
 }

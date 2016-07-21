@@ -9,7 +9,7 @@ import edu.wpi.first.wpilibj.command.Command;
 public class RollersOn extends Command{
 
 	private double lateralValue, intakeValue;
-	private Victor intakeRollersc, lateralRollersc;
+	private VictorSP intakeRollersc, lateralRollersc;
 
 	public RollersOn(double lateralsc, double intakesc) {
 
