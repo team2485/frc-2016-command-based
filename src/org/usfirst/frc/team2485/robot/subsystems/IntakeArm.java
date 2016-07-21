@@ -7,7 +7,6 @@ import org.usfirst.frc.team2485.util.SpeedControllerWrapper;
 import org.usfirst.frc.team2485.util.WarlordsPIDController;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
-import src.org.usfirst.frc.team2485.subsystems.PIDController;
 
 public class IntakeArm extends Subsystem{
 	
@@ -34,11 +33,11 @@ public class IntakeArm extends Subsystem{
 		
 		armPID = new WarlordsPIDController(ConstantsIO.kP_IntakeArm,
 				ConstantsIO.kI_IntakeArm, ConstantsIO.kD_IntakeArm, absEncoder,
-				armSpeedControllerWrapper, 00.0100);
+				armSpeedControllerWrapper);
 		armPID.setAbsoluteTolerance(ABSOLUTE_TOLERANCE);
 
 		armPID.setInputRange(0.0, 1.0);
-		armPID.setContinuous();
+		armPID.setContinuous(true);
 
 		armPID.setOutputRange(-0.22, 0.55);
 		
@@ -49,5 +48,30 @@ public class IntakeArm extends Subsystem{
 		// TODO Auto-generated method stub
 		
 	}
+	
+	public void setManual(double PWM){
+		
+		if(armPID.isEnabled()) {
+			armPID.disable();
+		}
+		
+		armSpeedControllerWrapper.set(PWM);
+		
+	}
+	
+	public void setSetpoint(double setpt){
+		
+		armPID.enable();
+		armPID.setSetpoint(setpt);
+		
+	}
+	
+	public double getCurrPos(){
+		
+		return absEncoder.get();
+		
+	}
+	
+	
 
 }

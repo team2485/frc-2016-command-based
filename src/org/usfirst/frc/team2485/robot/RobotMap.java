@@ -1,8 +1,11 @@
 package org.usfirst.frc.team2485.robot;
 
+import org.usfirst.frc.team2485.robot.subsystems.IntakeArm;
 import org.usfirst.frc.team2485.robot.subsystems.IntakeRollers;
+import org.usfirst.frc.team2485.util.InvertedAbsoluteEncoder;
 import org.usfirst.frc.team2485.util.SpeedControllerWrapper;
 
+import edu.wpi.first.wpilibj.AnalogPotentiometer;
 import edu.wpi.first.wpilibj.Victor;
 
 /**
@@ -24,10 +27,16 @@ public class RobotMap {
 	
 	public static int scIntakeRollerPort1 = 1;
 	public static int scIntakeRollerPort2 = 2;
+	public static int scIntakeArmPort1 = 3;
 	
 	public static IntakeRollers intakeRollers = new IntakeRollers();
+	public static IntakeArm intakeArm = new IntakeArm();
 	
 	public static Victor intakeRollerLateralsc = new Victor(scIntakeRollerPort1);
 	public static Victor intakeRollerIntakesc = new Victor(scIntakeRollerPort2);
-	public static SpeedControllerWrapper intakeArmSC = new SpeedControllerWrapper(speedController)
+	public static Victor intakeArmVictor = new Victor(scIntakeArmPort1);
+	
+	public static SpeedControllerWrapper intakeArmSC = new SpeedControllerWrapper(intakeArmVictor);
+	
+	public static InvertedAbsoluteEncoder intakeAbsEncoder = new InvertedAbsoluteEncoder(new AnalogPotentiometer(0));
 }
