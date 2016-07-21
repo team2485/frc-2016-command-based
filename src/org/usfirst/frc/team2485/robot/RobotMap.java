@@ -1,6 +1,7 @@
 package org.usfirst.frc.team2485.robot;
 
 import org.usfirst.frc.team2485.robot.subsystems.IntakeRollers;
+import org.usfirst.frc.team2485.util.SpeedControllerWrapper;
 
 import edu.wpi.first.wpilibj.Victor;
 
@@ -28,4 +29,5 @@ public class RobotMap {
 	
 	public static Victor intakeRollerLateralsc = new Victor(scIntakeRollerPort1);
 	public static Victor intakeRollerIntakesc = new Victor(scIntakeRollerPort2);
+	public static SpeedControllerWrapper intakeArmSC = new SpeedControllerWrapper(speedController)
 }
