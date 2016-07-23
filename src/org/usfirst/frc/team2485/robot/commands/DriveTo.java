@@ -4,7 +4,7 @@ import org.usfirst.frc.team2485.robot.RobotMap;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-public class DriveTo extends Command{
+public class DriveTo extends Command {
 	
 	private double inches;
 	private double maxAbsVelocity;

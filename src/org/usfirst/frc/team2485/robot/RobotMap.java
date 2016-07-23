@@ -5,12 +5,14 @@ import org.usfirst.frc.team2485.robot.subsystems.IntakeArm;
 import org.usfirst.frc.team2485.robot.subsystems.IntakeRollers;
 import org.usfirst.frc.team2485.util.EncoderWrapperRateAndDistance;
 import org.usfirst.frc.team2485.util.InvertedAbsoluteEncoder;
+import org.usfirst.frc.team2485.util.LidarWrapper;
 import org.usfirst.frc.team2485.util.SpeedControllerWrapper;
 
 import com.kauailabs.navx.frc.AHRS;
 
 import edu.wpi.first.wpilibj.AnalogPotentiometer;
 import edu.wpi.first.wpilibj.Encoder;
+import edu.wpi.first.wpilibj.I2C;
 import edu.wpi.first.wpilibj.PIDSourceType;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.VictorSP;
@@ -65,8 +67,7 @@ public class RobotMap {
 	public static EncoderWrapperRateAndDistance rightRateEncoder = new EncoderWrapperRateAndDistance(rightDriveEnc, PIDSourceType.kRate);
 	
 	public static AHRS ahrs = new AHRS(SPI.Port.kMXP);
-
-
-
+	
+	public static LidarWrapper lidar = new LidarWrapper(I2C.Port.kMXP);
 	
 }

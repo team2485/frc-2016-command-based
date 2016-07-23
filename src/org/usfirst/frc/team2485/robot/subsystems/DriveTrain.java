@@ -1,8 +1,5 @@
 package org.usfirst.frc.team2485.robot.subsystems;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import org.usfirst.frc.team2485.robot.RobotMap;
 import org.usfirst.frc.team2485.util.ConstantsIO;
 import org.usfirst.frc.team2485.util.DummyOutput;
@@ -260,7 +257,6 @@ public class DriveTrain extends Subsystem{
 		leftVelocityPID.setSetpoint(leftOutput);
 		rightVelocityPID.setSetpoint(rightOutput);
 	}
-	
 	
 	/**
 	 * Sends outputs values to the left and right side of the drive base after 
