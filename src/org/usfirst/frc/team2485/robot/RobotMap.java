@@ -70,4 +70,6 @@ public class RobotMap {
 	
 	public static LidarWrapper lidar = new LidarWrapper(I2C.Port.kMXP);
 	
+	public static final float kMoveIntakeManuallyDeadband = 0.3f;
+	
 }
