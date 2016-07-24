@@ -353,6 +353,7 @@ public class WarlordsPIDController {
 			}
 			
 		}
+		System.out.println("error:"+ error);
 		
 		double propTerm = kP * error;
 		double integralError = kI*propTerm + decoupleInput + kC * saturateError;

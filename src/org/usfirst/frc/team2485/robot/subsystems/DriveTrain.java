@@ -86,6 +86,9 @@ public class DriveTrain extends Subsystem{
 		
 		RobotMap.leftDriveEnc.reset();
 		RobotMap.rightDriveEnc.reset();
+		
+		rightVelocityPID.setOutputRange(-.3, .3);
+		leftVelocityPID.setOutputRange(-.3, .3);
 
 	}
 	
@@ -247,6 +250,7 @@ public class DriveTrain extends Subsystem{
 	 */
 	public void setLeftRightVelocity(double leftOutput, double rightOutput) {
 				
+		System.out.println("L" + leftOutput + "R" + rightOutput);
 		leftVelocityPID.setPID(ConstantsIO.kP_DriveVelocity, ConstantsIO.kI_DriveVelocity, 
 				ConstantsIO.kD_DriveVelocity, ConstantsIO.kF_DriveVelocity);
 		rightVelocityPID.setPID(ConstantsIO.kP_DriveVelocity, ConstantsIO.kI_DriveVelocity, 
@@ -330,6 +334,7 @@ public class DriveTrain extends Subsystem{
 	 */
 	public boolean driveToAndRotateTo(double inches, double startAngle, double endAngle, double maxSpeed) {
 		
+		System.out.println("DriveTrain:we got to here");
 		if (!driveToPID.isEnabled()) {
 			driveToPID.enable();
 			rotateToPID.enable();
