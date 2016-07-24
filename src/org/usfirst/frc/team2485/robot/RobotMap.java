@@ -81,7 +81,7 @@ public class RobotMap {
 		
 	}
 	
-public static void updateConstants() {
+	public static void updateConstants() {
 		
 		
 		rightDrive.setRampRate(ConstantsIO.kDriveVoltageRamp);
@@ -120,4 +120,6 @@ public static void updateConstants() {
 
 	public static LidarWrapper lidar;
 
+	public static final float kMoveIntakeManuallyDeadband = 0.3f;
+	
 }

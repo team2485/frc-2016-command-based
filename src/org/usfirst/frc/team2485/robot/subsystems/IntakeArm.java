@@ -72,6 +72,10 @@ public class IntakeArm extends Subsystem{
 		
 	}
 	
+	public boolean isPIDEnabled(){
+		return armPID.isEnabled();
+	}
+	
 	
 
 }
