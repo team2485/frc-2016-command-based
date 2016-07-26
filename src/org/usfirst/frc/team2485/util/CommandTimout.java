@@ -11,16 +11,18 @@ public class CommandTimout extends Command {
 		this.innerCommand = innerCommand;
 		this.setTimeout(timeout);
 
-		Scheduler.getInstance().add(innerCommand);
 	}
 
 	@Override
 	protected void initialize() {
+		System.out.println("Started timedCommand");
+		Scheduler.getInstance().add(innerCommand);
 	}
 
 	@Override
 	protected void execute() {
 		if (isTimedOut()) {
+			System.out.println("Timed out");
 			innerCommand.cancel();
 		}
 	}
@@ -32,18 +34,11 @@ public class CommandTimout extends Command {
 
 	@Override
 	protected void end() {
+		innerCommand.cancel();
 	}
 
 	@Override
 	protected void interrupted() {
-		throw new YouReallyShouldntDoThatException("A Command Timeout was interupted!");
-	}
-
-	@SuppressWarnings("serial")
-	private class YouReallyShouldntDoThatException extends RuntimeException {
-
-		private YouReallyShouldntDoThatException(String message) {
-			super(message);
-		}
+		end();
 	}
 }

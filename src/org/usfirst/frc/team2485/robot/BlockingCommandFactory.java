@@ -1,6 +1,7 @@
 package org.usfirst.frc.team2485.robot;
 
 import org.usfirst.frc.team2485.robot.commands.DriveTo;
+import org.usfirst.frc.team2485.robot.commands.TestCommand;
 import org.usfirst.frc.team2485.util.BlockingCommand;
 import org.usfirst.frc.team2485.util.CommandTimout;
 
@@ -15,18 +16,16 @@ public class BlockingCommandFactory {
 			@Override
 			public void run() {
 
-				while (RobotMap.lidar.getDistance() > 100) {
+//				while (RobotMap.lidar.getDistance() > 100) {
 
 					System.out.println("Confirm enter: " + RobotMap.lidar.getDistance());
 
-					Scheduler.getInstance().add(new BlockingCommand(new CommandTimout(new DriveTo(50, 10, 0, 0), 3)));
+					Scheduler.getInstance().add(new CommandTimout(new BlockingCommand(new TestCommand()), 2));
 
 					System.out.println("Exit");
-				}
-
+//				}
 			}
 		}).start();
-
 	}
 }
 
