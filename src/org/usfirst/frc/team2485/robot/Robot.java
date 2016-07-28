@@ -1,6 +1,7 @@
 
 package org.usfirst.frc.team2485.robot;
 
+import org.usfirst.frc.team2485.robot.commands.DriveTo;
 import org.usfirst.frc.team2485.robot.subsystems.ExampleSubsystem;
 import org.usfirst.frc.team2485.util.ConstantsIO;
 
@@ -30,11 +31,13 @@ public class Robot extends IterativeRobot {
     	ConstantsIO.init();
     	RobotMap.updateConstants();
     	RobotMap.ahrs.reset();
-        BlockingCommandFactory.advanceTo100InchReallyBadlyPlzNeverUseThis();
+//        BlockingCommandFactory.advanceTo100InchReallyBadlyPlzNeverUseThis();
+    	RobotMap.driveTrain.reset();
+    	Scheduler.getInstance().add(new DriveTo(200, 50, 0, 0)); 
     }
 
     public void autonomousPeriodic() {
-        Scheduler.getInstance().run();
+        Scheduler.getInstance().run();	
     }
 
     public void teleopInit() {
