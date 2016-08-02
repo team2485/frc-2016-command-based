@@ -9,7 +9,7 @@ public class DriveTo extends Command {
 	private double inches;
 	private double maxAbsVelocity;
 	
-	private boolean finished;
+	private boolean finished = false;
 	private double startAngel;
 	private double endAngel;
 	
@@ -29,9 +29,9 @@ public class DriveTo extends Command {
 
 	@Override
 	protected void execute() {
-		// TODO Auto-generated method stub
 		finished = RobotMap.driveTrain.driveToAndRotateTo(inches, startAngel, endAngel, maxAbsVelocity);
-		
+
+
 	}
 
 	@Override
