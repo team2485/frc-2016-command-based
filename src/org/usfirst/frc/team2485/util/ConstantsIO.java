@@ -8,6 +8,8 @@ import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.Scanner;
 
+import org.usfirst.frc.team2485.robot.Robot;
+
 /**
  * Static class to interface IO between the RoboRio and the Driver Station. 
  * Used to save constants to a file rather than being hard coded. 
@@ -19,6 +21,7 @@ import java.util.Scanner;
 public class ConstantsIO {
 
 	public static final String ROBO_RIO_CONSTANTS_FILE_PATH = "/home/lvuser/Constants.txt", 
+			SIMULATION_CONSTANTS_FILE_PATH = "/media/jeremy/SHARED/frc-2016-command-based/Constants.txt",
 			DRIVER_STATION_CONSTANTS_FILE_PATH = "C:\\Users\\2485\\Documents\\frc-2016\\Constants.txt";
 
 	
@@ -40,12 +43,18 @@ public class ConstantsIO {
 	public static double kLongShotRPS, kBatterShotRPS;
 	
 	public static void init() {
-		
-		try {
-			data = parseLoadFile(readLocalFile(ROBO_RIO_CONSTANTS_FILE_PATH));
-		} catch (IOException e1) {
-			e1.printStackTrace();
-			
+		if (Robot.isSimulation()) {
+			try {
+				data = parseLoadFile(readLocalFile(SIMULATION_CONSTANTS_FILE_PATH));
+			} catch (IOException e1) {
+				e1.printStackTrace();	
+			}
+		} else {
+			try {
+				data = parseLoadFile(readLocalFile(ROBO_RIO_CONSTANTS_FILE_PATH));
+			} catch (IOException e1) {
+				e1.printStackTrace();	
+			}
 		}
 		
 		kLongShotRPS = Double.parseDouble(data.get("kLongShotRPS"));

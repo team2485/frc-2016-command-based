@@ -12,6 +12,8 @@ public class BlockingCommand extends Command {
 		
 		Scheduler.getInstance().add(innerCommand);
 		
+		System.out.println("constructed blocking");
+		
 		while (!isFinished()) {
 			try {
 				Thread.sleep(20);
@@ -36,18 +38,12 @@ public class BlockingCommand extends Command {
 
 	@Override
 	protected void end() {
+		innerCommand.cancel();
 	}
 	
 	@Override
 	protected void interrupted() {
-		throw new YouReallyShouldntDoThatException("A Blocking Command was interupted!");
+		end();
 	}
 
-	@SuppressWarnings("serial")
-	private class YouReallyShouldntDoThatException extends RuntimeException {
-
-		private YouReallyShouldntDoThatException(String message) {
-			super(message);
-		}
-	}
 }

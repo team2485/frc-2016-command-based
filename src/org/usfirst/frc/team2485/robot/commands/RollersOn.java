@@ -2,14 +2,13 @@ package org.usfirst.frc.team2485.robot.commands;
 
 import org.usfirst.frc.team2485.robot.RobotMap;
 
-import edu.wpi.first.wpilibj.Victor;
-import edu.wpi.first.wpilibj.VictorSP;
+import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.command.Command;
 
 public class RollersOn extends Command{
 
 	private double lateralValue, intakeValue;
-	private VictorSP intakeRollersc, lateralRollersc;
+	private SpeedController intakeRollersc, lateralRollersc;
 
 	public RollersOn(double lateralsc, double intakesc) {
 

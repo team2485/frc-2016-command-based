@@ -2,9 +2,7 @@ package org.usfirst.frc.team2485.util;
 
 import java.util.Arrays;
 
-
-
-
+import edu.wpi.first.wpilibj.CANSpeedController;
 import edu.wpi.first.wpilibj.SpeedController;
 
 /**
@@ -16,7 +14,6 @@ import edu.wpi.first.wpilibj.SpeedController;
  * @author Patrick Wamsley
  * @author Anoushka Bose
  * @author Jeremy McCulloch
- * @author Nicholas Contreras
  */
 public class SpeedControllerWrapper implements SpeedController {
 
@@ -25,15 +22,12 @@ public class SpeedControllerWrapper implements SpeedController {
 	private boolean rampMode = false;
 	private double rampRate;
 	private boolean currentMonitoring = false;
-	
+	//private CurrentMonitorGroup currentMonitor;
 	private double lastPWM;
 
 	public SpeedControllerWrapper(SpeedController[] speedControllerList, double[] scaleFactors) {
 
-		
-
 		this.speedControllerList = speedControllerList;
-	
 		
 		setScaleFactors(scaleFactors);
 
@@ -105,7 +99,7 @@ public class SpeedControllerWrapper implements SpeedController {
 
 	@Override
 	public void set(double speed, byte syncGroup) {
-		
+		speed = rampAndMonitorCurrent(speed);
 		for (int i = 0; i < speedControllerList.length; i++) {
 			speedControllerList[i].set(speed * scaleFactors[i], syncGroup);
 		}
@@ -113,7 +107,7 @@ public class SpeedControllerWrapper implements SpeedController {
 
 	@Override
 	public void set(double speed) {
-		
+		speed = rampAndMonitorCurrent(speed);
 //		System.out.println("SpeedControllerWrapper " + pdpSlotsList[0] + ": Speed after rampAndMonitorCurrent: " + speed);
 		for (int i = 0; i < speedControllerList.length; i++) {
 			speedControllerList[i].set(speed * scaleFactors[i]);
@@ -129,6 +123,7 @@ public class SpeedControllerWrapper implements SpeedController {
 		lastPWM = 0;
 	}
 
+	@Override
 	public void setInverted(boolean isInverted) {
 		for (SpeedController s : speedControllerList)
 			s.setInverted(isInverted);
@@ -139,7 +134,13 @@ public class SpeedControllerWrapper implements SpeedController {
 		return speedControllerList[0].getInverted();
 	}
 
-	
+//	public double getCurrent() {
+//		double current = 0.0;
+//		for (int slot : pdpSlotsList) {
+//			current += Hardware.battery.getCurrent(slot);
+//		}
+//		return current;
+	//}
 
 	// public boolean isMoving() {
 	// return speedControllerList[0].get() > .05;
@@ -169,17 +170,56 @@ public class SpeedControllerWrapper implements SpeedController {
 		return rampRate;
 	}
 
-	public void setCurrentMonitoring(boolean currentMonitoring) {
-		this.currentMonitoring = currentMonitoring;
+//	public void setCurrentMonitoring(boolean currentMonitoring) {
+//		this.currentMonitoring = currentMonitoring;
+//	}
+//
+//	public void setCurrentMonitor(CurrentMonitorGroup currentMonitor) {
+//		this.currentMonitor = currentMonitor;
+//		this.currentMonitoring = true;
+//	}
+//
+//	public boolean isCurrentMonitoring() {
+//		return currentMonitoring;
+//	}
+//
+//	public CurrentMonitorGroup getCurrentMonitor() {
+//		return currentMonitor;
+//	}
+
+	/**
+	 * 
+	 * @param desiredPWM
+	 *            the value that you would like to set the speedcontrollers to
+	 * @return the value that the speed controller should be set to
+	 */
+	private double rampAndMonitorCurrent(double desiredPWM) {
+
+//		if (currentMonitoring && currentMonitor != null) {
+//
+//			double maxAbsPWM = currentMonitor.getMaxAbsolutePWMValue();
+//
+//			if (maxAbsPWM == CurrentMonitorGroup.EMERGENCY_STOP_FLAG) {
+//				lastPWM = 0;
+//				desiredPWM = 0;
+//			} else if (desiredPWM > maxAbsPWM) {
+//				desiredPWM = maxAbsPWM;
+//			} else if (desiredPWM < -maxAbsPWM) {
+//				desiredPWM = -maxAbsPWM;
+//			}
+//
+//		}
+
+		if (rampMode && rampRate > 0) {
+			if (desiredPWM - lastPWM > rampRate) {
+				desiredPWM = lastPWM + rampRate;
+			} else if (desiredPWM - lastPWM < -rampRate) {
+				desiredPWM = lastPWM - rampRate;
+			}
+		}
+		lastPWM = desiredPWM;
+		return desiredPWM;
 	}
-
-	
-	public boolean isCurrentMonitoring() {
-		return currentMonitoring;
-	}
-
-	
-
 
 	@Override
 	public void stopMotor() {
