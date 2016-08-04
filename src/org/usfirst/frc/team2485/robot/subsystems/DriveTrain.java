@@ -1,5 +1,6 @@
 package org.usfirst.frc.team2485.robot.subsystems;
 
+import org.usfirst.frc.team2485.robot.Robot;
 import org.usfirst.frc.team2485.robot.RobotMap;
 import org.usfirst.frc.team2485.util.ConstantsIO;
 import org.usfirst.frc.team2485.util.DummyOutput;
@@ -61,11 +62,19 @@ public class DriveTrain extends Subsystem{
 				RobotMap.rightDriveEnc);
 		
 		dummyRotateToOutput = new DummyOutput();
-		rotateToPID = new WarlordsPIDController(
-				ConstantsIO.kP_Rotate,
-				ConstantsIO.kI_Rotate,
-				ConstantsIO.kD_Rotate, RobotMap.ahrs,
-				dummyRotateToOutput);
+		if(Robot.isSimulation()){
+			rotateToPID = new WarlordsPIDController(
+					ConstantsIO.kP_Rotate,
+					ConstantsIO.kI_Rotate,
+					ConstantsIO.kD_Rotate, RobotMap.simulationGyro,
+					dummyRotateToOutput);
+		} else {
+			rotateToPID = new WarlordsPIDController(
+					ConstantsIO.kP_Rotate,
+					ConstantsIO.kI_Rotate,
+					ConstantsIO.kD_Rotate, RobotMap.ahrs,
+					dummyRotateToOutput); 
+		}
 		rotateToPID.setAbsoluteTolerance(ABS_TOLERANCE_ROTATETO);
 		rotateToPID.setOutputRange(-10, 10);
 		rotateToPID.setInputRange(-180, 180);

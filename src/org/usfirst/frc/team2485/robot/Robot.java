@@ -5,6 +5,7 @@ import org.usfirst.frc.team2485.robot.commands.DriveTo;
 import org.usfirst.frc.team2485.robot.subsystems.ExampleSubsystem;
 import org.usfirst.frc.team2485.util.ConstantsIO;
 
+import edu.wpi.first.wpilibj.CounterBase;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
@@ -30,7 +31,11 @@ public class Robot extends IterativeRobot {
     public void autonomousInit() {
     	ConstantsIO.init();
     	RobotMap.updateConstants();
-    	RobotMap.ahrs.reset();
+    	if(Robot.isSimulation()){
+    		 RobotMap.simulationGyro.resetAccumulator();
+    	} else {
+    		RobotMap.ahrs.reset();
+    	}
 //        BlockingCommandFactory.advanceTo100InchReallyBadlyPlzNeverUseThis();
     	RobotMap.driveTrain.reset();
     	Scheduler.getInstance().add(new DriveTo(200, 50, 0, 0)); 

@@ -11,6 +11,7 @@ import org.usfirst.frc.team2485.util.SpeedControllerWrapper;
 
 import com.kauailabs.navx.frc.AHRS;
 
+import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.AnalogPotentiometer;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.I2C;
@@ -78,6 +79,8 @@ public class RobotMap {
 				rightDriveEnc, PIDSourceType.kRate);
 
 		if (!Robot.isSimulation()) {
+			simulationGyro = new AnalogInput(10);
+		} else {
 			ahrs = new AHRS(SPI.Port.kMXP);
 			lidar = new LidarWrapper(I2C.Port.kMXP);
 		}
@@ -146,6 +149,7 @@ public class RobotMap {
 	public static EncoderWrapperRateAndDistance rightRateEncoder;
 
 	public static AHRS ahrs;
+	public static AnalogInput simulationGyro;
 
 	public static LidarWrapper lidar;
 
