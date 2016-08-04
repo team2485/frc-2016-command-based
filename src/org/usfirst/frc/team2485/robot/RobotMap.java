@@ -19,6 +19,7 @@ import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.VictorSP;
+import edu.wpi.first.wpilibj.CounterBase.EncodingType;
 
 /**
  * The RobotMap is a mapping from the ports sensors and actuators are wired into
@@ -134,5 +135,11 @@ public class RobotMap {
 	public static LidarWrapper lidar;
 
 	public static final float kMoveIntakeManuallyDeadband = 0.3f;
+<<<<<<< HEAD
 
+=======
+	public static final  shooterEnc = shooterEnc = new Encoder(Constants.kShooterEncoder[0], Constants.kShooterEncoder[1],
+			false, EncodingType.k1X);; 
+	
+>>>>>>> 2a0d9f02807c41816a05b352fbbe6ed98139c28d
 }
