@@ -37,30 +37,23 @@ public class RobotMap {
 		if (Robot.isSimulation()) {
 			intakeRollerLateralsc = new Talon(scLateralRollerPort);
 			intakeRollerIntakesc = new Talon(scIntakeRollerPort);
-			intakeArmSC = new SpeedControllerWrapper(
-					new Talon(scIntakeArmPort1));
+			intakeArmSC = new SpeedControllerWrapper(new Talon(scIntakeArmPort1));
 			rightDrive = new SpeedControllerWrapper(new Talon(5));
 			leftDrive = new SpeedControllerWrapper(new Talon(2));
 		} else {
 			intakeRollerLateralsc = new VictorSP(scLateralRollerPort);
 			intakeRollerIntakesc = new VictorSP(scIntakeRollerPort);
 			intakeArmVictorSP = new VictorSP(scIntakeArmPort1);
-			rightDriveVictorSPs = new VictorSP[] { new VictorSP(5), new VictorSP(6),
-					new VictorSP(7) };
-			leftDriveVictorSPs = new VictorSP[] { new VictorSP(2), new VictorSP(3),
-					new VictorSP(4) };
+			rightDriveVictorSPs = new VictorSP[] { new VictorSP(5), new VictorSP(6), new VictorSP(7) };
+			leftDriveVictorSPs = new VictorSP[] { new VictorSP(2), new VictorSP(3), new VictorSP(4) };
 
-			intakeArmSC = new SpeedControllerWrapper(
-					intakeArmVictorSP);
-			rightDrive = new SpeedControllerWrapper(
-					rightDriveVictorSPs);
-			leftDrive = new SpeedControllerWrapper(
-					leftDriveVictorSPs);
+			intakeArmSC = new SpeedControllerWrapper(intakeArmVictorSP);
+			rightDrive = new SpeedControllerWrapper(rightDriveVictorSPs);
+			leftDrive = new SpeedControllerWrapper(leftDriveVictorSPs);
 		}
 
-		intakeAbsEncoder = new InvertedAbsoluteEncoder(
-				new AnalogPotentiometer(0));
-		
+		intakeAbsEncoder = new InvertedAbsoluteEncoder(new AnalogPotentiometer(0));
+
 		if (Robot.isSimulation()) {
 			leftDriveEnc = new Encoder(2, 3);
 		} else {
@@ -68,57 +61,48 @@ public class RobotMap {
 		}
 		rightDriveEnc = new Encoder(4, 5);
 
-		leftDistEncoder = new EncoderWrapperRateAndDistance(
-				leftDriveEnc, PIDSourceType.kDisplacement);
-		leftRateEncoder = new EncoderWrapperRateAndDistance(
-				leftDriveEnc, PIDSourceType.kRate);
-		rightDistEncoder = new EncoderWrapperRateAndDistance(
-				rightDriveEnc, PIDSourceType.kDisplacement);
-		rightRateEncoder = new EncoderWrapperRateAndDistance(
-				rightDriveEnc, PIDSourceType.kRate);
+		leftDistEncoder = new EncoderWrapperRateAndDistance(leftDriveEnc, PIDSourceType.kDisplacement);
+		leftRateEncoder = new EncoderWrapperRateAndDistance(leftDriveEnc, PIDSourceType.kRate);
+		rightDistEncoder = new EncoderWrapperRateAndDistance(rightDriveEnc, PIDSourceType.kDisplacement);
+		rightRateEncoder = new EncoderWrapperRateAndDistance(rightDriveEnc, PIDSourceType.kRate);
 
-		if (!Robot.isSimulation()) {
-			ahrs = new AHRS(SPI.Port.kMXP);
-			lidar = new LidarWrapper(I2C.Port.kMXP);
-		}
-		
-		
+		// if (!Robot.isSimulation()) {
+		ahrs = new AHRS(SPI.Port.kMXP);
+		lidar = new LidarWrapper(I2C.Port.kMXP);
+		// }
+
 		intakeRollers = new IntakeRollers();
 		intakeArm = new IntakeArm();
 		driveTrain = new DriveTrain();
-		
+
 		if (Robot.isSimulation()) {
-			
-			leftDriveEnc.setDistancePerPulse(11.56/360.0);
-			rightDriveEnc.setDistancePerPulse(11.56/360.0);
-			
+
+			leftDriveEnc.setDistancePerPulse(11.56 / 360.0);
+			rightDriveEnc.setDistancePerPulse(11.56 / 360.0);
+
 		} else {
-			
+
 			rightDrive.setInverted(false);
 			leftDrive.setInverted(true);
-			
+
 			leftDriveEnc.setDistancePerPulse(0.01295 * 4);
 			rightDriveEnc.setDistancePerPulse(0.01295 * 4);
-			
+
 		}
-		
-		
+
 		rightDrive.setRampMode(true);
 		leftDrive.setRampMode(true);
 
-		
-		
 	}
-	
+
 	public static void updateConstants() {
-		
-		
+
 		rightDrive.setRampRate(ConstantsIO.kDriveVoltageRamp);
 		leftDrive.setRampRate(ConstantsIO.kDriveVoltageRamp);
 		driveTrain.updateConstants();
-		//shooter.updateConstants();
-		//intake.updateConstants();
-		
+		// shooter.updateConstants();
+		// intake.updateConstants();
+
 	}
 
 	public static IntakeRollers intakeRollers;
@@ -150,5 +134,5 @@ public class RobotMap {
 	public static LidarWrapper lidar;
 
 	public static final float kMoveIntakeManuallyDeadband = 0.3f;
-	
+
 }

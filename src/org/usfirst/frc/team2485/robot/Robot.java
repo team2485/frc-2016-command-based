@@ -31,7 +31,7 @@ public class Robot extends IterativeRobot {
     	ConstantsIO.init();
     	RobotMap.updateConstants();
     	RobotMap.ahrs.reset();
-//        BlockingCommandFactory.advanceTo100InchReallyBadlyPlzNeverUseThis();
+        BlockingCommandFactory.advanceTo100InchReallyBadlyPlzNeverUseThis();
     	RobotMap.driveTrain.reset();
     	Scheduler.getInstance().add(new DriveTo(200, 50, 0, 0)); 
     }

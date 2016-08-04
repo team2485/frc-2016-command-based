@@ -16,14 +16,14 @@ public class BlockingCommandFactory {
 			@Override
 			public void run() {
 
-//				while (RobotMap.lidar.getDistance() > 100) {
+				while (RobotMap.lidar.getDistance() > 100) {
 
 					System.out.println("Confirm enter: " + RobotMap.lidar.getDistance());
 
 					Scheduler.getInstance().add(new CommandTimout(new BlockingCommand(new TestCommand()), 2));
 
 					System.out.println("Exit");
-//				}
+				}
 			}
 		}).start();
 	}
