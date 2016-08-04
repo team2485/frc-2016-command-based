@@ -2,6 +2,7 @@ package org.usfirst.frc.team2485.robot.subsystems;
 
 import org.usfirst.frc.team2485.robot.Robot;
 import org.usfirst.frc.team2485.robot.RobotMap;
+import org.usfirst.frc.team2485.robot.commands.DriveWithControllers;
 import org.usfirst.frc.team2485.util.ConstantsIO;
 import org.usfirst.frc.team2485.util.DummyOutput;
 import org.usfirst.frc.team2485.util.MultipleEncoderWrapper;
@@ -27,13 +28,13 @@ public class DriveTrain extends Subsystem{
 	// AUTONOMOUS
 	private DummyOutput dummyRotateToOutput, dummyDriveToEncoderOutput;
 	public WarlordsPIDController rotateToPID, driveToPID;
-	
+
 	private WarlordsPIDController leftVelocityPID, rightVelocityPID;
 
 	private RampRate leftVelocityRamp, rightVelocityRamp;
-	 
+
 	private MultipleEncoderWrapper minDriveEncoderDist; //used as source for driveToEncoderPID in case one tread slips
-	
+
 	private int ahrsOnTargetCounter = 0;
 	private static final int MINIMUM_AHRS_ON_TARGET_ITERATIONS = 4;
 
@@ -53,28 +54,22 @@ public class DriveTrain extends Subsystem{
 	private boolean isQuickTurn = false;
 
 	public DriveTrain() {
-		
+
 		rightVelocityRamp = new RampRate(ConstantsIO.kDriveVelocityUpRamp, ConstantsIO.kDriveVelocityDownRamp);
 		leftVelocityRamp = new RampRate(ConstantsIO.kDriveVelocityUpRamp, ConstantsIO.kDriveVelocityDownRamp);
 
 		minDriveEncoderDist = new MultipleEncoderWrapper(PIDSourceType.kDisplacement, 
 				MultipleEncoderWrapperMode.MIN, RobotMap.leftDriveEnc,
 				RobotMap.rightDriveEnc);
-		
+
 		dummyRotateToOutput = new DummyOutput();
-		if(Robot.isSimulation()){
-			rotateToPID = new WarlordsPIDController(
-					ConstantsIO.kP_Rotate,
-					ConstantsIO.kI_Rotate,
-					ConstantsIO.kD_Rotate, RobotMap.simulationGyro,
-					dummyRotateToOutput);
-		} else {
-			rotateToPID = new WarlordsPIDController(
-					ConstantsIO.kP_Rotate,
-					ConstantsIO.kI_Rotate,
-					ConstantsIO.kD_Rotate, RobotMap.ahrs,
-					dummyRotateToOutput); 
-		}
+
+		rotateToPID = new WarlordsPIDController(
+				ConstantsIO.kP_Rotate,
+				ConstantsIO.kI_Rotate,
+				ConstantsIO.kD_Rotate, RobotMap.gyro,
+				dummyRotateToOutput); 
+
 		rotateToPID.setAbsoluteTolerance(ABS_TOLERANCE_ROTATETO);
 		rotateToPID.setOutputRange(-10, 10);
 		rotateToPID.setInputRange(-180, 180);
@@ -92,21 +87,21 @@ public class DriveTrain extends Subsystem{
 		leftVelocityPID = new WarlordsPIDController(ConstantsIO.kP_DriveVelocity, ConstantsIO.kI_DriveVelocity, 
 				ConstantsIO.kD_DriveVelocity, ConstantsIO.kF_DriveVelocity, 
 				RobotMap.leftRateEncoder, RobotMap.leftDrive);
-		
+
 		RobotMap.leftDriveEnc.reset();
 		RobotMap.rightDriveEnc.reset();
-		
+
 		rightVelocityPID.setOutputRange(-.3, .3);
 		leftVelocityPID.setOutputRange(-.3, .3);
 
 	}
-	
+
 	public void updateConstants() {
-		
+
 		driveToPID.setPID(ConstantsIO.kP_DriveTo,
 				ConstantsIO.kI_DriveTo, ConstantsIO.kD_DriveTo, 0);
 		rotateToPID.setPID(ConstantsIO.kP_Rotate,
-						ConstantsIO.kI_Rotate, ConstantsIO.kD_Rotate, 0);
+				ConstantsIO.kI_Rotate, ConstantsIO.kD_Rotate, 0);
 	}
 
 	/**
@@ -117,7 +112,7 @@ public class DriveTrain extends Subsystem{
 		rotateToPID.disable();
 		emergencyStop();
 	}
-	
+
 	/**
 	 * W.A.R. Lord Drive This drive method is based off of Team 254's Ultimate
 	 * Ascent cheesyDrive code.
@@ -258,19 +253,19 @@ public class DriveTrain extends Subsystem{
 	 * @param rightOutput right target velocity
 	 */
 	public void setLeftRightVelocity(double leftOutput, double rightOutput) {
-				
+
 		System.out.println("L" + leftOutput + "R" + rightOutput);
 		leftVelocityPID.setPID(ConstantsIO.kP_DriveVelocity, ConstantsIO.kI_DriveVelocity, 
 				ConstantsIO.kD_DriveVelocity, ConstantsIO.kF_DriveVelocity);
 		rightVelocityPID.setPID(ConstantsIO.kP_DriveVelocity, ConstantsIO.kI_DriveVelocity, 
 				ConstantsIO.kD_DriveVelocity, ConstantsIO.kF_DriveVelocity);
-		
+
 		leftVelocityPID.enable();
 		rightVelocityPID.enable();
 		leftVelocityPID.setSetpoint(leftOutput);
 		rightVelocityPID.setSetpoint(rightOutput);
 	}
-	
+
 	/**
 	 * Sends outputs values to the left and right side of the drive base after 
 	 * scaling based on virtual gear.  
@@ -286,14 +281,14 @@ public class DriveTrain extends Subsystem{
 
 		leftVelocityPID.disable();
 		rightVelocityPID.disable();
-		
+
 		leftOutput *= driveSpeed;
 		rightOutput *= driveSpeed;
 
 		RobotMap.leftDrive.set(leftOutput);
 		RobotMap.rightDrive.set(rightOutput);
 	}
-	
+
 	/**
 	 * Stops both drive motors, overwriting voltage ramping
 	 */
@@ -301,7 +296,7 @@ public class DriveTrain extends Subsystem{
 
 		leftVelocityPID.disable();
 		rightVelocityPID.disable();
-		
+
 		RobotMap.leftDrive.emergencyStop();
 		RobotMap.rightDrive.emergencyStop();
 	}
@@ -331,7 +326,7 @@ public class DriveTrain extends Subsystem{
 		RobotMap.leftDriveEnc.reset();
 		RobotMap.rightDriveEnc.reset();
 	}
-	
+
 	/**
 	 * Used to drive in a curve using closed loop control, set startAngle = endAngle to drive straight <br>
 	 * Uses cascaded PIDControllers to achieve optimal performance
@@ -342,7 +337,7 @@ public class DriveTrain extends Subsystem{
 	 * @return true if target has been reached
 	 */
 	public boolean driveToAndRotateTo(double inches, double startAngle, double endAngle, double maxSpeed) {
-		
+
 		System.out.println("DriveTrain:we got to here");
 		if (!driveToPID.isEnabled()) {
 			driveToPID.enable();
@@ -353,7 +348,7 @@ public class DriveTrain extends Subsystem{
 
 		driveToPID.setOutputRange(-maxSpeed, maxSpeed);
 		rotateToPID.setOutputRange(-maxSpeed, maxSpeed);
-		
+
 		//uses % of distance to calculate where to turn to
 		double percentDone = (RobotMap.leftDriveEnc.getDistance() + 
 				RobotMap.rightDriveEnc.getDistance()) / 2 / (inches+0.00000001);//don't divide by 0
@@ -363,20 +358,20 @@ public class DriveTrain extends Subsystem{
 			percentDone = 0;
 		}
 		rotateToPID.setSetpoint(startAngle + (endAngle - startAngle) * percentDone); 
-		
+
 		double encoderOutput = dummyDriveToEncoderOutput.get();
 		double rotateToOutput = dummyRotateToOutput.get();
-		
+
 		// use output from PIDControllers to calculate target velocities
 		double leftVelocity = encoderOutput + rotateToOutput; 
 		double rightVelocity = encoderOutput - rotateToOutput;
-		
+
 		// ramp output from PIDControllers to prevent saturating velocity control loop
 		leftVelocity = leftVelocityRamp.getNextValue(leftVelocity);
 		rightVelocity = rightVelocityRamp.getNextValue(rightVelocity);
 
 		setLeftRightVelocity(leftVelocity, rightVelocity);
-		
+
 		if (Math.abs(rotateToPID.getError()) < ABS_TOLERANCE_DRIVETO_ANGLE) {
 			ahrsOnTargetCounter++;
 		} else {	
@@ -388,16 +383,16 @@ public class DriveTrain extends Subsystem{
 		if (Math.abs(driveToPID.getError()) < ABS_TOLERANCE_DRIVETO_DISTANCE 
 				&& Math.abs(avgVelocity) < LOW_ENC_RATE &&
 				ahrsOnTargetCounter >= MINIMUM_AHRS_ON_TARGET_ITERATIONS) {
-			
+
 			setLeftRightVelocity(0.0, 0.0); // actively stops driveTrain
 			driveToPID.disable();
 			rotateToPID.disable();
 			return true;
-			
+
 		}
-		
+
 		return false;
-		
+
 	}
 
 	public boolean rotateTo(double angle) {
@@ -415,11 +410,11 @@ public class DriveTrain extends Subsystem{
 			throw new IllegalStateException("can't rotateTo when ahrs is null");
 
 		double SMALL_LARGE_THRESHOLD = 5;
-		
+
 		if (!rotateToPID.isEnabled()) {
 			rotateToPID.enable();			
 		}
-		
+
 		rotateToPID.setOutputRange(-15, 15);
 		rotateToPID.setSetpoint(angle);
 
@@ -430,35 +425,35 @@ public class DriveTrain extends Subsystem{
 		} else {
 			ahrsOnTargetCounter = 0;
 		}
-		
+
 
 		if (ahrsOnTargetCounter >= MINIMUM_AHRS_ON_TARGET_ITERATIONS) {
 			setLeftRightVelocity(0, 0);
 			rotateToPID.disable();
 			return true;
 		}
-		
+
 		double leftVelocity = ahrsOutput;
 		//noticed better results by only driving one belt instead of both for small angles, decreased friction
 		double rightVelocity = Math.abs(rotateToPID.getError()) > SMALL_LARGE_THRESHOLD ? -ahrsOutput : 0;
-		
+
 		leftVelocity = leftVelocityRamp.getNextValue(leftVelocity);
 		rightVelocity = rightVelocityRamp.getNextValue(rightVelocity);
-		
+
 		setLeftRightVelocity(leftVelocity, rightVelocity);
-		
+
 		return false;
 	}
 
 	@Override
 	protected void initDefaultCommand() {
-		// TODO Auto-generated method stub
-		
+		setDefaultCommand(new DriveWithControllers());
+
 	}
-	
+
 	public double getDist(){
 		return minDriveEncoderDist.pidGet();
 	}
-	
-	
+
+
 }

@@ -8,7 +8,7 @@ import org.usfirst.frc.team2485.util.WarlordsPIDController;
 import edu.wpi.first.wpilibj.CANTalon;
 import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import src.org.usfirst.frc.team2485.subsystems.Shooter.HoodPosition;
+
 
 public class Shooter {
 	/**
@@ -33,11 +33,10 @@ public class Shooter {
 public Shooter() {
 	
 
-	RobotMap.rightShooterMotor.changeControlMode(CANTalon.TalonControlMode.PercentVbus);
-	RobotMap.leftShooterMotor.changeControlMode(CANTalon.TalonControlMode.PercentVbus);
+	
 	
 	shooterMotors = new SpeedControllerWrapper(new SpeedController[] { RobotMap.leftShooterMotor, 
-			RobotMap.rightShooterMotor }, new int[] { 0, 0 });
+			RobotMap.rightShooterMotor });
 
 	ratePID = new WarlordsPIDController(ConstantsIO.kP_Shooter, ConstantsIO.kI_Shooter, ConstantsIO.kD_Shooter,
 			ConstantsIO.kF_Shooter, RobotMap.shooterEnc, shooterMotors);
@@ -70,7 +69,6 @@ public double getSetpoint() {
 }
 
 public double getRate() {
-
 	return RobotMap.shooterEnc.getRate();
 
 }
