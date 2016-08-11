@@ -3,6 +3,7 @@ package org.usfirst.frc.team2485.robot;
 import org.usfirst.frc.team2485.robot.subsystems.DriveTrain;
 import org.usfirst.frc.team2485.robot.subsystems.IntakeArm;
 import org.usfirst.frc.team2485.robot.subsystems.IntakeRollers;
+import org.usfirst.frc.team2485.robot.subsystems.Shooter;
 import org.usfirst.frc.team2485.util.ConstantsIO;
 import org.usfirst.frc.team2485.util.EncoderWrapperRateAndDistance;
 import org.usfirst.frc.team2485.util.GyroWrapper;
@@ -92,6 +93,7 @@ public class RobotMap {
 		intakeRollers = new IntakeRollers();
 		intakeArm = new IntakeArm();
 		driveTrain = new DriveTrain();
+		shooter = new Shooter();
 
 		if (Robot.isSimulation()) {
 
@@ -149,6 +151,7 @@ public class RobotMap {
 
 	public static GyroWrapper gyro;
 	
+	public static Shooter shooter;
 
 	public static LidarWrapper lidar;
 

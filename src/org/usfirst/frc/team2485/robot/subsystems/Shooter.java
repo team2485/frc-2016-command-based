@@ -7,10 +7,11 @@ import org.usfirst.frc.team2485.util.WarlordsPIDController;
 
 import edu.wpi.first.wpilibj.CANTalon;
 import edu.wpi.first.wpilibj.SpeedController;
+import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 
-public class Shooter {
+public class Shooter extends Subsystem {
 	/**
 	 * Low Angle = Long Shot <br>
 	 * High Angle = Batter Shot <br>
@@ -22,67 +23,84 @@ public class Shooter {
 
 	//Adjusted by ConstantsIO
 	public static double RPS_LONG_SHOT = 95, 
-		RPS_BATTER_SHOT = 80;
-	
+			RPS_BATTER_SHOT = 80;
+
 	private static final HoodPosition DEFAULT_HOOD_POSITION = HoodPosition.HIGH_ANGLE;
 	private SpeedControllerWrapper shooterMotors;
 	private HoodPosition currHoodPosition;
 	public WarlordsPIDController ratePID;
 
 
-public Shooter() {
-	
+	public Shooter() {
 
-	
-	
-	shooterMotors = new SpeedControllerWrapper(new SpeedController[] { RobotMap.leftShooterMotor, 
-			RobotMap.rightShooterMotor });
+		shooterMotors = new SpeedControllerWrapper(new SpeedController[] { RobotMap.leftShooterMotor, 
+				RobotMap.rightShooterMotor });
 
-	ratePID = new WarlordsPIDController(ConstantsIO.kP_Shooter, ConstantsIO.kI_Shooter, ConstantsIO.kD_Shooter,
-			ConstantsIO.kF_Shooter, RobotMap.shooterEnc, shooterMotors);
-	ratePID.setBufferLength(3);
-	ratePID.setOutputRange(0, 1);
+		ratePID = new WarlordsPIDController(ConstantsIO.kP_Shooter, ConstantsIO.kI_Shooter, ConstantsIO.kD_Shooter,
+				ConstantsIO.kF_Shooter, RobotMap.shooterEnc, shooterMotors);
+		ratePID.setBufferLength(3);
+		ratePID.setOutputRange(0, 1);
 
-	currHoodPosition = DEFAULT_HOOD_POSITION;
-	
-	RPS_BATTER_SHOT = ConstantsIO.kBatterShotRPS;
-	RPS_LONG_SHOT = ConstantsIO.kLongShotRPS;
-	
-	SmartDashboard.putNumber("RPS Batter Shot", RPS_BATTER_SHOT);
-	SmartDashboard.putNumber("RPS Long Shot", RPS_LONG_SHOT);
+		currHoodPosition = DEFAULT_HOOD_POSITION;
 
-	disableShooter();
-	
+		RPS_BATTER_SHOT = ConstantsIO.kBatterShotRPS;
+		RPS_LONG_SHOT = ConstantsIO.kLongShotRPS;
 
-}
-public void disableShooter() {
+		SmartDashboard.putNumber("RPS Batter Shot", RPS_BATTER_SHOT);
+		SmartDashboard.putNumber("RPS Long Shot", RPS_LONG_SHOT);
 
-	if (ratePID.isEnabled()) {
-		ratePID.disable();
+		disableShooter();
+
 	}
-	shooterMotors.emergencyStop();
-
-}
-
-public double getSetpoint() {
-	return ratePID.getSetpoint();
-}
-
-public double getRate() {
-	return RobotMap.shooterEnc.getRate();
-
-}
-
-public double getError() {
-
-	return getSetpoint() - getRate();
 	
-}
+	public boolean isPIDEnabled(){
+		return (ratePID.isEnabled());
+	}
+	
+	public void setTargetSpeed(double rpm){
+		if (!isPIDEnabled()){
+			ratePID.enable();
+		}
+		ratePID.setSetpoint(rpm);
+	}
+	
+	public void setHoodPosition (HoodPosition desiredHoodPosition) {
+		currHoodPosition=desiredHoodPosition;
+	}
+	
+	public void disableShooter() {
 
-public double getAvgError() {
-	
-	return ratePID.getAvgError();
-	
-}
+		if (ratePID.isEnabled()) {
+			ratePID.disable();
+		}
+		shooterMotors.emergencyStop();
+
+	}
+
+	public double getSetpoint() {
+		return ratePID.getSetpoint();
+	}
+
+	public double getRate() {
+		return RobotMap.shooterEnc.getRate();
+
+	}
+
+	public double getError() {
+
+		return getSetpoint() - getRate();
+
+	}
+
+	public double getAvgError() {
+
+		return ratePID.getAvgError();
+
+	}
+	@Override
+	protected void initDefaultCommand() {
+		// TODO Auto-generated method stub
+		
+	}
 
 }
