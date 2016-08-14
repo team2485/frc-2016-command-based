@@ -2,7 +2,6 @@
 package org.usfirst.frc.team2485.robot;
 
 import org.usfirst.frc.team2485.robot.commands.DriveTo;
-import org.usfirst.frc.team2485.robot.subsystems.ExampleSubsystem;
 import org.usfirst.frc.team2485.util.ConstantsIO;
 
 import edu.wpi.first.wpilibj.CounterBase;
