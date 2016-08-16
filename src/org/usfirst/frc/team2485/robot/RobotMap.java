@@ -1,5 +1,6 @@
 package org.usfirst.frc.team2485.robot;
 
+import org.usfirst.frc.team2485.robot.subsystems.BoulderStager;
 import org.usfirst.frc.team2485.robot.subsystems.DriveTrain;
 import org.usfirst.frc.team2485.robot.subsystems.IntakeArm;
 import org.usfirst.frc.team2485.robot.subsystems.IntakeRollers;
@@ -20,6 +21,7 @@ import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.I2C;
 import edu.wpi.first.wpilibj.PIDSourceType;
 import edu.wpi.first.wpilibj.SPI;
+import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.VictorSP;
@@ -158,6 +160,9 @@ public class RobotMap {
 	public static final float kMoveIntakeManuallyDeadband = 0.3f;
 
 	public static Encoder shooterEnc;
+	public static Solenoid boulderStagerSolenoid1;
+	public static Solenoid boulderStagerSolenoid2;
+	public static BoulderStager boulderStager = new BoulderStager();
 
 
 }

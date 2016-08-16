@@ -1,6 +1,7 @@
 package org.usfirst.frc.team2485.robot.subsystems;
 
 import org.usfirst.frc.team2485.robot.RobotMap;
+import org.usfirst.frc.team2485.robot.commands.IntakeArmWithControllers;
 import org.usfirst.frc.team2485.util.ConstantsIO;
 import org.usfirst.frc.team2485.util.InvertedAbsoluteEncoder;
 import org.usfirst.frc.team2485.util.SpeedControllerWrapper;
@@ -46,7 +47,7 @@ public class IntakeArm extends Subsystem{
 	@Override
 	protected void initDefaultCommand() {
 		// TODO Auto-generated method stub
-		
+		setDefaultCommand(new IntakeArmWithControllers());
 	}
 	
 	public void setManual(double PWM){
