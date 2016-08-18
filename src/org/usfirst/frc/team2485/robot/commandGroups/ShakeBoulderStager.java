@@ -12,9 +12,9 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
  */
 public class ShakeBoulderStager extends CommandGroup {
 	public ShakeBoulderStager() {
-		addSequential(new SetBoulderStager(StagerPosition.INTAKE));
+		addSequential(new SetBoulderStager(StagerPosition.SHOOTING));
 		addSequential(new CommandTimeout(0.3));
-		addSequential(new SetBoulderStager(StagerPosition.NEUTRAL));
+		addSequential(new SetBoulderStager(StagerPosition.INTAKE));
 		addSequential(new CommandTimeout(0.3));
 		addSequential(new SetBoulderStager(StagerPosition.NEUTRAL));
 	}
