@@ -110,7 +110,7 @@ public class SpeedControllerWrapper implements SpeedController {
 		speed = rampAndMonitorCurrent(speed);
 //		System.out.println("SpeedControllerWrapper " + pdpSlotsList[0] + ": Speed after rampAndMonitorCurrent: " + speed);
 		for (int i = 0; i < speedControllerList.length; i++) {
-			speedControllerList[i].set(speed * scaleFactors[i]);
+			speedControllerList[i].set(speed * scaleFactors[i]);	
 		}
 	}
 

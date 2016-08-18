@@ -18,7 +18,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 /**
  * @author Jeremy McCulloch
  */
-public class DriveTrain extends Subsystem{
+public class DriveTrain extends Subsystem {
 
 	private final double NORMAL_SPEED_RATING = 0.8, FAST_SPEED_RATING = 1.0,
 			SLOW_SPEED_RATING = 0.6; // virtual gears

@@ -3,7 +3,7 @@ package org.usfirst.frc.team2485.robot;
 import org.usfirst.frc.team2485.robot.commands.DriveTo;
 import org.usfirst.frc.team2485.robot.commands.TestCommand;
 import org.usfirst.frc.team2485.util.BlockingCommand;
-import org.usfirst.frc.team2485.util.CommandTimout;
+import org.usfirst.frc.team2485.util.CommandTimeout;
 
 import edu.wpi.first.wpilibj.command.Scheduler;
 
@@ -20,7 +20,7 @@ public class BlockingCommandFactory {
 
 					System.out.println("Confirm enter: " + RobotMap.lidar.getDistance());
 
-					Scheduler.getInstance().add(new CommandTimout(new BlockingCommand(new TestCommand()), 2));
+					Scheduler.getInstance().add(new CommandTimeout(new BlockingCommand(new TestCommand()), 2));
 
 					System.out.println("Exit");
 				}

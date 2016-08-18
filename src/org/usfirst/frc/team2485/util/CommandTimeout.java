@@ -3,25 +3,30 @@ package org.usfirst.frc.team2485.util;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 
-public class CommandTimout extends Command {
+public class CommandTimeout extends Command {
 
 	private Command innerCommand;
 
-	public CommandTimout(Command innerCommand, double timeout) {
+	public CommandTimeout(double timeout) {
+		this(null, timeout);
+	}
+	
+	public CommandTimeout(Command innerCommand, double timeout) {
 		this.innerCommand = innerCommand;
 		this.setTimeout(timeout);
-
 	}
 
 	@Override
 	protected void initialize() {
 		System.out.println("Started timedCommand");
-		Scheduler.getInstance().add(innerCommand);
+		if (innerCommand != null) {
+			Scheduler.getInstance().add(innerCommand);
+		}
 	}
 
 	@Override
 	protected void execute() {
-		if (isTimedOut()) {
+		if (isTimedOut() && innerCommand != null) {
 			System.out.println("Timed out");
 			innerCommand.cancel();
 		}
@@ -29,12 +34,18 @@ public class CommandTimout extends Command {
 
 	@Override
 	protected boolean isFinished() {
-		return innerCommand.isCanceled();
+		if (innerCommand == null) {
+			return isTimedOut();
+		} else {
+			return innerCommand.isCanceled();
+		}
 	}
 
 	@Override
 	protected void end() {
-		innerCommand.cancel();
+		if (innerCommand != null) {
+			innerCommand.cancel();
+		}
 	}
 
 	@Override

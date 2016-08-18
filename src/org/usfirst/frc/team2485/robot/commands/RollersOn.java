@@ -5,7 +5,7 @@ import org.usfirst.frc.team2485.robot.RobotMap;
 import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.command.Command;
 
-public class RollersOn extends Command{
+public class RollersOn extends Command {
 
 	private double lateralValue, intakeValue;
 	private SpeedController intakeRollersc, lateralRollersc;

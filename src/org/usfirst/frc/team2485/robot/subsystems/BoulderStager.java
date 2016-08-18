@@ -1,23 +1,16 @@
 package org.usfirst.frc.team2485.robot.subsystems;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import org.usfirst.frc.team2485.robot.RobotMap;
 import org.usfirst.frc.team2485.robot.commands.SetBoulderStager;
-import org.usfirst.frc.team2485.robot.commands.ShakeBoulderStager;
 
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
-import jdk.nashorn.internal.runtime.Context;
-import jdk.nashorn.internal.runtime.logging.DebugLogger;
-import jdk.nashorn.internal.runtime.logging.Loggable;
 /**
  * 
  * @author Sahana Kumar
  *
  */
-public class BoulderStager extends Subsystem implements Loggable {
+public class BoulderStager extends Subsystem {
 	private Solenoid solenoid1, solenoid2;
 
 	private StagerPosition position;
@@ -71,26 +64,6 @@ public class BoulderStager extends Subsystem implements Loggable {
 		} else {
 			return "Shooting";
 		}
-	}
-
-	public Map<String, Object> getLogData() {
-
-		Map<String, Object> logData = new HashMap<String, Object>();
-
-		logData.put("Name", "BoulderStager");
-		logData.put("Position", getPositionString());
-
-		return logData;
-	}
-
-	@Override
-	public DebugLogger getLogger() {
-		return null;
-	}
-
-	@Override
-	public DebugLogger initLogger(Context arg0) {
-		return null;
 	}
 
 	@Override
