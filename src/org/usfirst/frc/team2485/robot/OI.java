@@ -1,6 +1,12 @@
 package org.usfirst.frc.team2485.robot;
 
+import org.usfirst.frc.team2485.robot.commandGroups.ShakeBoulderStager;
+import org.usfirst.frc.team2485.robot.commandGroups.ShootHighGoal;
+import org.usfirst.frc.team2485.robot.commandGroups.ShootLowGoal;
+
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.buttons.Button;
+import edu.wpi.first.wpilibj.buttons.JoystickButton;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -17,12 +23,68 @@ public class OI {
     public static void init(){
     	xBox = new Joystick(0);
     	joystick = new Joystick(1);
+    	
+    	
+    	Button BtnA = new JoystickButton(xBox, XBOX_BTN_A);
+        
+        Button BtnB = new JoystickButton(xBox, XBOX_BTN_B);
+        
+        Button BtnX = new JoystickButton(xBox, XBOX_BTN_X);
+        
+        Button BtnY = new JoystickButton(xBox, XBOX_BTN_Y);
+        
+        Button Btn1 = new JoystickButton(joystick, 1);
+        
+        Button Btn2 = new JoystickButton(joystick, 2);
+        
+        Button Btn3 = new JoystickButton(joystick, 3);
+        
+        Button Btn4 = new JoystickButton(joystick, 4);
+        
+        Button Btn5 = new JoystickButton(joystick, 5);
+        
+        Button Btn6 = new JoystickButton(joystick, 6);
+        
+        
+        Btn1.whenPressed(new ShootHighGoal());
+        
+        Btn2.whenPressed(new ShootLowGoal());
+        
+        Btn3.whenPressed(new ShakeBoulderStager());
+        
+       // Btn4.whenPressed(new );
+        
+       // Btn5.whenPressed(new );
+        
+       // Btn6.whenPressed(new );
+        
+       // BtnA.whenPressed(new );
+        
+       // BtnB.whenPressed(new );
+        
+       // BtnX.whenPressed(new );
+        
+       // BtnY.whenPressed(new );
     }
     // Button button = new JoystickButton(stick, buttonNumber);
+    public static final int XBOX_BTN_A = 1;
+  
+    public static final int XBOX_BTN_B = 2;
+  
+    public static final int XBOX_BTN_X = 3;
+  
+    public static final int XBOX_BTN_Y = 4;
     
+   
+    
+    
+    
+ 
     // There are a few additional built in buttons you can use. Additionally,
     // by subclassing Button you can create custom triggers and bind those to
     // commands the same as any other Button.
+    
+   
     
     //// TRIGGERING COMMANDS WITH BUTTONS
     // Once you have a button, it's trivial to bind it to a button in one of
