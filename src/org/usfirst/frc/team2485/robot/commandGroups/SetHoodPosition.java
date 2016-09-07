@@ -9,11 +9,17 @@ import org.usfirst.frc.team2485.util.CommandTimeout;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
 public class SetHoodPosition extends CommandGroup {
+	private HoodPosition desiredHoodPosition;
 	
-	public SetHoodPosition(HoodPosition desiredHoodPosition) {
+	public SetHoodPosition(HoodPosition hoodPosition) {
 		
 		requires(RobotMap.shooter);
-		
+		desiredHoodPosition = hoodPosition;
+	}
+	
+	 @Override
+	protected void initialize() {
+
 		HoodPosition currHoodPosition = RobotMap.shooter.getHoodPosition();
 		
 		if (desiredHoodPosition == HoodPosition.LOW_ANGLE) {

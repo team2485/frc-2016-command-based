@@ -1,5 +1,6 @@
 package org.usfirst.frc.team2485.robot;
 
+import org.usfirst.frc.team2485.robot.subsystems.BoulderDetector;
 import org.usfirst.frc.team2485.robot.subsystems.BoulderStager;
 import org.usfirst.frc.team2485.robot.subsystems.DriveTrain;
 import org.usfirst.frc.team2485.robot.subsystems.IntakeArm;
@@ -122,6 +123,7 @@ public class RobotMap {
 		driveTrain = new DriveTrain();
 		shooter = new Shooter();
 		boulderStager = new BoulderStager();
+		boulderDetector = new BoulderDetector();
 
 		if (Robot.isSimulation()) {
 
@@ -190,6 +192,7 @@ public class RobotMap {
 	public static Solenoid boulderStagerSolenoid1, boulderStagerSolenoid2,
 			lowerShooterHoodSolenoid, upperShooterHoodSolenoid;
 	public static BoulderStager boulderStager;
+	public static BoulderDetector boulderDetector;
 	public static Relay compressorSpike;
 	public static DigitalInput pressureSwitch;
 	public static Ultrasonic sonic;
