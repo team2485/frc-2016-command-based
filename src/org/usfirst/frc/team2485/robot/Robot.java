@@ -1,20 +1,24 @@
 
 package org.usfirst.frc.team2485.robot;
 
+import javax.sound.midi.Sequencer;
+
 import org.usfirst.frc.team2485.robot.commands.DriveTo;
+import org.usfirst.frc.team2485.robot.commands.SpinUpShooter;
 import org.usfirst.frc.team2485.util.ConstantsIO;
 
 import edu.wpi.first.wpilibj.CounterBase;
 import edu.wpi.first.wpilibj.IterativeRobot;
+import edu.wpi.first.wpilibj.Relay;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 
 public class Robot extends IterativeRobot {
 
 	public void robotInit() {
-		OI.init();
 		ConstantsIO.init();
 		RobotMap.init();
+		OI.init();
 		RobotMap.updateConstants();
 	}
 
@@ -33,16 +37,19 @@ public class Robot extends IterativeRobot {
 
 
 		RobotMap.gyro.reset();
+		Scheduler.getInstance().add(new SpinUpShooter(85));
 
 		//        BlockingCommandFactory.advanceTo100InchReallyBadlyPlzNeverUseThis();
 
 		RobotMap.driveTrain.reset();
-		Scheduler.getInstance().add(new DriveTo(200, 50, 0, 0)); 
+//		Scheduler.getInstance().add(new DriveTo(200, 50, 0, 0)); 
 	}
 
 
 	public void autonomousPeriodic() {
 		Scheduler.getInstance().run();	
+		System.out.println("ROBOT:SHOOTER ENC: " + RobotMap.shooterEnc.getRate());
+		
 	}
 
 	public void teleopInit() {
@@ -60,10 +67,12 @@ public class Robot extends IterativeRobot {
 	}
 
 	public void testPeriodic() {
-		LiveWindow.run();
-		//        RobotMap.driveTrain.setLeftRight(0.3, 0.3);
-		RobotMap.driveTrain.setLeftRightVelocity(10, 10);
-		System.out.println("Left"+RobotMap.leftDriveEnc.getRate());
-		System.out.println("Right"+RobotMap.rightDriveEnc.getRate());
+		
+		if (RobotMap.pressureSwitch.get()) {
+			RobotMap.compressorSpike.set(Relay.Value.kOff);
+		} else {
+			RobotMap.compressorSpike.set(Relay.Value.kForward);
+		}
+		
 	}
 }

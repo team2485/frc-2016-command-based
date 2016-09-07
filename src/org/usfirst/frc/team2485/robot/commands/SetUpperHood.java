@@ -4,11 +4,12 @@ import org.usfirst.frc.team2485.robot.RobotMap;
 import org.usfirst.frc.team2485.robot.subsystems.Shooter;
 import edu.wpi.first.wpilibj.command.Command;
 
-public class SetHoodPosition extends Command {
-	private Shooter.HoodPosition desiredHoodPosition;
+public class SetUpperHood extends Command {
+	private boolean extended;
 	
-	public SetHoodPosition(Shooter.HoodPosition desiredHoodPosition) {
-		this.desiredHoodPosition = desiredHoodPosition;
+	public SetUpperHood(boolean extended) {
+		requires(RobotMap.shooter);
+		this.extended = extended;
 	}
 	@Override
 	protected void end() { }
@@ -18,7 +19,7 @@ public class SetHoodPosition extends Command {
 
 	@Override
 	protected void initialize() {
-		RobotMap.shooter.setHoodPosition(desiredHoodPosition);
+		RobotMap.upperShooterHoodSolenoid.set(extended);
 	}
 
 	@Override

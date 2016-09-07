@@ -1,8 +1,17 @@
 package org.usfirst.frc.team2485.robot;
 
+import org.usfirst.frc.team2485.robot.commandGroups.IntakeBall;
+import org.usfirst.frc.team2485.robot.commandGroups.PrepForBatterShot;
+import org.usfirst.frc.team2485.robot.commandGroups.PrepForLongShot;
+import org.usfirst.frc.team2485.robot.commandGroups.PrepForLowBar;
 import org.usfirst.frc.team2485.robot.commandGroups.ShakeBoulderStager;
 import org.usfirst.frc.team2485.robot.commandGroups.ShootHighGoal;
 import org.usfirst.frc.team2485.robot.commandGroups.ShootLowGoal;
+import org.usfirst.frc.team2485.robot.commands.IntakeArmSetSetpoint;
+import org.usfirst.frc.team2485.robot.commands.RollersOn;
+import org.usfirst.frc.team2485.robot.commands.SpinUpShooter;
+import org.usfirst.frc.team2485.robot.subsystems.IntakeArm;
+import org.usfirst.frc.team2485.util.ConstantsIO;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
@@ -33,6 +42,10 @@ public class OI {
         
         Button BtnY = new JoystickButton(xBox, XBOX_BTN_Y);
         
+        BtnB.whenPressed(new PrepForLowBar());
+        
+        BtnX.whenPressed(new IntakeBall());
+        
         Button Btn1 = new JoystickButton(joystick, 1);
         
         Button Btn2 = new JoystickButton(joystick, 2);
@@ -45,12 +58,42 @@ public class OI {
         
         Button Btn6 = new JoystickButton(joystick, 6);
         
+        Button Btn7 = new JoystickButton(joystick, 7);
+        
+        Button Btn8 = new JoystickButton(joystick, 8);
+        
+        Button Btn9 = new JoystickButton(joystick, 9);
+        
+        Button Btn10 = new JoystickButton(joystick, 10);
+        
+        Button Btn11 = new JoystickButton(joystick, 11);
+        
+        Button Btn12 = new JoystickButton(joystick, 12);
         
         Btn1.whenPressed(new ShootHighGoal());
         
         Btn2.whenPressed(new ShootLowGoal());
         
         Btn3.whenPressed(new ShakeBoulderStager());
+        
+        Btn4.whenPressed(new PrepForBatterShot());
+        
+        Btn5.whenPressed(new SpinUpShooter(0));
+        
+        Btn6.whenPressed(new PrepForLongShot());
+        
+        Btn7.whenPressed(new RollersOn(0, 0));
+        
+        Btn8.whenPressed(new IntakeArmSetSetpoint(IntakeArm.FLOOR_POSITION));
+        
+        Btn9.whenPressed(new IntakeArmSetSetpoint(IntakeArm.LOW_NO_INTAKE_POSITION));
+        
+        
+        Btn10.whenPressed(new IntakeArmSetSetpoint(IntakeArm.INTAKE_POSITION));
+        
+        Btn11.whenPressed(new IntakeArmSetSetpoint(IntakeArm.PORTCULLIS_POSITION));
+        
+        Btn12.whenPressed(new IntakeArmSetSetpoint(IntakeArm.FULL_UP_POSITION));
         
        // Btn4.whenPressed(new );
         
@@ -75,9 +118,15 @@ public class OI {
   
     public static final int XBOX_BTN_Y = 4;
     
+    public static final int XBOX_LBUMPER = 5;
+    
+    public static final int XBOX_RBUMPER = 6;
+    
    
     
+    public static final int XBOX_LTRIGGER = 2;
     
+    public static final int XBOX_RTRIGGER = 3;
     
  
     // There are a few additional built in buttons you can use. Additionally,

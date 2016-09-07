@@ -345,7 +345,10 @@ public class WarlordsPIDController {
 	private synchronized void calculate() {
 		
 		double error = setpoint - sensorVal;
-		while (continuous && Math.abs(error) > (maxInput - minInput) / 2) {
+		
+		System.out.println("PID ERROR: " + error);
+		
+		while (continuous& Math.abs(error) > (maxInput - minInput) / 2) {
 			if (error > 0) {
 				error -= maxInput - minInput;
 			} else {
@@ -353,7 +356,6 @@ public class WarlordsPIDController {
 			}
 			
 		}
-		System.out.println("error:"+ error);
 		
 		double propTerm = kP * error;
 		double integralError = kI*propTerm + decoupleInput + kC * saturateError;
@@ -391,6 +393,8 @@ public class WarlordsPIDController {
 		saturateError = result - outputPreSat;
 		
 		lastPropTerm = propTerm;
+		
+		System.out.println("Output: " + result);
 		
 		synchronized (errorBuffer) {
 			errorBuffer.add(error);

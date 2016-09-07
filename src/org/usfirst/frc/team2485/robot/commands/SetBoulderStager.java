@@ -13,7 +13,9 @@ import edu.wpi.first.wpilibj.command.Command;
 
 public class SetBoulderStager extends Command {
 	StagerPosition value;
-	public SetBoulderStager(StagerPosition setValue){
+	public SetBoulderStager(StagerPosition setValue) {
+		requires(RobotMap.boulderStager);
+		
 		value = setValue;
 	}
 	@Override
@@ -38,7 +40,6 @@ public class SetBoulderStager extends Command {
 
 	@Override
 	protected boolean isFinished() {
-		// TODO Auto-generated method stub
 		return true;
 	}
 

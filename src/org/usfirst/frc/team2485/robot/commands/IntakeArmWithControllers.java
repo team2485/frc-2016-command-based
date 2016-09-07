@@ -23,8 +23,9 @@ public class IntakeArmWithControllers extends Command{
 
 	@Override
 	protected void execute() {
-		double joystickY = -OI.joystick.getRawAxis(1);
-		if (Math.abs(joystickY) > 0) { //
+		double joystickY = OI.joystick.getRawAxis(1);
+
+		if (Math.abs(joystickY) > RobotMap.kMoveIntakeManuallyDeadband) {
 			
 			if (joystickY > 0) {
 
@@ -81,6 +82,7 @@ public class IntakeArmWithControllers extends Command{
 			}
 
 		} else if (!RobotMap.intakeArm.isPIDEnabled()) {
+			System.out.println("Intake arm PID");
 			RobotMap.intakeArm.setSetpoint(RobotMap.intakeArm.getCurrPos());
 		}
 		

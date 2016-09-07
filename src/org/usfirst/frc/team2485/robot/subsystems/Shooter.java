@@ -1,5 +1,8 @@
 package org.usfirst.frc.team2485.robot.subsystems;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
 import org.usfirst.frc.team2485.robot.RobotMap;
 import org.usfirst.frc.team2485.util.ConstantsIO;
 import org.usfirst.frc.team2485.util.SpeedControllerWrapper;
@@ -37,7 +40,7 @@ public class Shooter extends Subsystem {
 				RobotMap.rightShooterMotor });
 
 		ratePID = new WarlordsPIDController(ConstantsIO.kP_Shooter, ConstantsIO.kI_Shooter, ConstantsIO.kD_Shooter,
-				ConstantsIO.kF_Shooter, RobotMap.shooterEnc, shooterMotors);
+				ConstantsIO.kF_Shooter, RobotMap.shooterRateEncoder, shooterMotors);
 		ratePID.setBufferLength(3);
 		ratePID.setOutputRange(0, 1);
 
@@ -53,19 +56,23 @@ public class Shooter extends Subsystem {
 
 	}
 	
-	public boolean isPIDEnabled(){
+	public boolean isPIDEnabled() {
 		return (ratePID.isEnabled());
 	}
 	
-	public void setTargetSpeed(double rpm){
+	public void setTargetSpeed(double rpm) {
 		if (!isPIDEnabled()){
 			ratePID.enable();
 		}
 		ratePID.setSetpoint(rpm);
 	}
 	
-	public void setHoodPosition (HoodPosition desiredHoodPosition) {
-		currHoodPosition=desiredHoodPosition;
+	public void setHoodPosition (HoodPosition desiredHoodPosition) {	
+		currHoodPosition = desiredHoodPosition;
+	}
+	
+	public HoodPosition getHoodPosition() {
+		return currHoodPosition;
 	}
 	
 	public void disableShooter() {
@@ -101,6 +108,11 @@ public class Shooter extends Subsystem {
 	protected void initDefaultCommand() {
 		// TODO Auto-generated method stub
 		
+	}
+
+	public void updateConstants() {
+		ratePID.setPID(ConstantsIO.kP_Shooter, ConstantsIO.kI_Shooter, ConstantsIO.kD_Shooter,
+				ConstantsIO.kF_Shooter);
 	}
 
 }

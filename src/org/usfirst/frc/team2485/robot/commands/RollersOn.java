@@ -11,7 +11,6 @@ public class RollersOn extends Command {
 	private SpeedController intakeRollersc, lateralRollersc;
 
 	public RollersOn(double lateralsc, double intakesc) {
-
 		requires(RobotMap.intakeRollers);
 		this.lateralRollersc = RobotMap.intakeRollerLateralsc;
 		this.intakeRollersc = RobotMap.intakeRollerIntakesc;
@@ -23,35 +22,26 @@ public class RollersOn extends Command {
 
 	@Override
 	protected void initialize() {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	protected void execute() {
 		lateralRollersc.set(lateralValue);
 		intakeRollersc.set(intakeValue);
 
 	}
 
 	@Override
+	protected void execute() {
+
+	}
+
+	@Override
 	protected boolean isFinished() {
-		// TODO Auto-generated method stub
-		return false;
+		return true;
 	}
 
 	@Override
 	protected void end() {
-		lateralRollersc.set(0);
-		intakeRollersc.set(0);
 	}
 
 	@Override
 	protected void interrupted() {
-		end();
-	
 	}
-
-	
-	
 }

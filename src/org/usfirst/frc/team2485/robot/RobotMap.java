@@ -17,13 +17,16 @@ import com.kauailabs.navx.frc.AHRS;
 import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.AnalogPotentiometer;
 import edu.wpi.first.wpilibj.CANTalon;
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.I2C;
 import edu.wpi.first.wpilibj.PIDSourceType;
+import edu.wpi.first.wpilibj.Relay;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.Talon;
+import edu.wpi.first.wpilibj.Ultrasonic;
 import edu.wpi.first.wpilibj.VictorSP;
 import edu.wpi.first.wpilibj.CounterBase.EncodingType;
 
@@ -44,7 +47,8 @@ public class RobotMap {
 		if (Robot.isSimulation()) {
 			intakeRollerLateralsc = new Talon(scLateralRollerPort);
 			intakeRollerIntakesc = new Talon(scIntakeRollerPort);
-			intakeArmSC = new SpeedControllerWrapper(new Talon(scIntakeArmPort1));
+			intakeArmSC = new SpeedControllerWrapper(
+					new Talon(scIntakeArmPort1));
 			rightDrive = new SpeedControllerWrapper(new Talon(5));
 			leftDrive = new SpeedControllerWrapper(new Talon(2));
 			leftShooterMotor = new Talon(13);
@@ -53,19 +57,30 @@ public class RobotMap {
 			intakeRollerLateralsc = new VictorSP(scLateralRollerPort);
 			intakeRollerIntakesc = new VictorSP(scIntakeRollerPort);
 			intakeArmVictorSP = new VictorSP(scIntakeArmPort1);
-			rightDriveVictorSPs = new VictorSP[] { new VictorSP(5), new VictorSP(6), new VictorSP(7) };
-			leftDriveVictorSPs = new VictorSP[] { new VictorSP(2), new VictorSP(3), new VictorSP(4) };
+			rightDriveVictorSPs = new VictorSP[] { new VictorSP(5),
+					new VictorSP(6), new VictorSP(7) };
+			leftDriveVictorSPs = new VictorSP[] { new VictorSP(2),
+					new VictorSP(3), new VictorSP(4) };
 
 			intakeArmSC = new SpeedControllerWrapper(intakeArmVictorSP);
 			rightDrive = new SpeedControllerWrapper(rightDriveVictorSPs);
 			leftDrive = new SpeedControllerWrapper(leftDriveVictorSPs);
 			leftShooterMotor = new CANTalon(3);
 			rightShooterMotor = new CANTalon(2);
+			leftShooterMotor.setInverted(true);
+			rightShooterMotor.setInverted(false);
+//			rightShooterMotor.changeControlMode(CANTalon.TalonControlMode.PercentVbus);
+//			leftShooterMotor.changeControlMode(CANTalon.TalonControlMode.PercentVbus);
 		}
 
-		intakeAbsEncoder = new InvertedAbsoluteEncoder(new AnalogPotentiometer(0));
+		intakeAbsEncoder = new InvertedAbsoluteEncoder(new AnalogPotentiometer(
+				0));
 
-		shooterEnc = new Encoder(6, 7, false, EncodingType.k1X); 
+		shooterEnc = new Encoder(6, 7, false, EncodingType.k1X);
+		shooterEnc.setDistancePerPulse(1.0/250);
+		shooterEnc.setPIDSourceType(PIDSourceType.kRate);
+		shooterEnc.setReverseDirection(true);
+
 		if (Robot.isSimulation()) {
 			leftDriveEnc = new Encoder(2, 3);
 		} else {
@@ -73,29 +88,40 @@ public class RobotMap {
 		}
 		rightDriveEnc = new Encoder(4, 5);
 
-
-		leftDistEncoder = new EncoderWrapperRateAndDistance(
-				leftDriveEnc, PIDSourceType.kDisplacement);
-		leftRateEncoder = new EncoderWrapperRateAndDistance(
-				leftDriveEnc, PIDSourceType.kRate);
-		rightDistEncoder = new EncoderWrapperRateAndDistance(
-				rightDriveEnc, PIDSourceType.kDisplacement);
-		rightRateEncoder = new EncoderWrapperRateAndDistance(
-				rightDriveEnc, PIDSourceType.kRate);
+		leftDistEncoder = new EncoderWrapperRateAndDistance(leftDriveEnc,
+				PIDSourceType.kDisplacement);
+		leftRateEncoder = new EncoderWrapperRateAndDistance(leftDriveEnc,
+				PIDSourceType.kRate);
+		rightDistEncoder = new EncoderWrapperRateAndDistance(rightDriveEnc,
+				PIDSourceType.kDisplacement);
+		rightRateEncoder = new EncoderWrapperRateAndDistance(rightDriveEnc,
+				PIDSourceType.kRate);
+		shooterRateEncoder = new EncoderWrapperRateAndDistance(shooterEnc, 
+				PIDSourceType.kRate);
+		
 
 		gyro = new GyroWrapper();
-		
+
+		compressorSpike = new Relay(0);
+		pressureSwitch = new DigitalInput(10);
+
+		sonic = new Ultrasonic(0, 1);
+
 		if (!Robot.isSimulation()) {
 			lidar = new LidarWrapper(I2C.Port.kMXP);
 		}
-			
 
+		boulderStagerSolenoid1 = new Solenoid(6);
+		boulderStagerSolenoid2 = new Solenoid(7);
 
+		lowerShooterHoodSolenoid = new Solenoid(4);
+		upperShooterHoodSolenoid = new Solenoid(5);
 
 		intakeRollers = new IntakeRollers();
 		intakeArm = new IntakeArm();
 		driveTrain = new DriveTrain();
 		shooter = new Shooter();
+		boulderStager = new BoulderStager();
 
 		if (Robot.isSimulation()) {
 
@@ -122,8 +148,8 @@ public class RobotMap {
 		rightDrive.setRampRate(ConstantsIO.kDriveVoltageRamp);
 		leftDrive.setRampRate(ConstantsIO.kDriveVoltageRamp);
 		driveTrain.updateConstants();
-		// shooter.updateConstants();
-		// intake.updateConstants();
+		shooter.updateConstants();
+		intakeArm.updateConstants();
 
 	}
 
@@ -150,9 +176,10 @@ public class RobotMap {
 	public static EncoderWrapperRateAndDistance leftRateEncoder;
 	public static EncoderWrapperRateAndDistance rightDistEncoder;
 	public static EncoderWrapperRateAndDistance rightRateEncoder;
+	public static EncoderWrapperRateAndDistance shooterRateEncoder;
 
 	public static GyroWrapper gyro;
-	
+
 	public static Shooter shooter;
 
 	public static LidarWrapper lidar;
@@ -160,9 +187,11 @@ public class RobotMap {
 	public static final float kMoveIntakeManuallyDeadband = 0.3f;
 
 	public static Encoder shooterEnc;
-	public static Solenoid boulderStagerSolenoid1;
-	public static Solenoid boulderStagerSolenoid2;
-	public static BoulderStager boulderStager = new BoulderStager();
-
+	public static Solenoid boulderStagerSolenoid1, boulderStagerSolenoid2,
+			lowerShooterHoodSolenoid, upperShooterHoodSolenoid;
+	public static BoulderStager boulderStager;
+	public static Relay compressorSpike;
+	public static DigitalInput pressureSwitch;
+	public static Ultrasonic sonic;
 
 }

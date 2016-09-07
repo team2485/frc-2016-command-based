@@ -1,14 +1,13 @@
 package org.usfirst.frc.team2485.robot.commands;
 
 import org.usfirst.frc.team2485.robot.RobotMap;
-import org.usfirst.frc.team2485.robot.RobotMap;
+import org.usfirst.frc.team2485.util.ConstantsIO;
 
 import edu.wpi.first.wpilibj.command.Command;
 
 
 public class SpinUpShooter extends Command {
 	private double rpm;
-	private long startTime = -1;
 	
 	public SpinUpShooter(double rpm) {
 		this.rpm = rpm;
@@ -24,6 +23,7 @@ public class SpinUpShooter extends Command {
 
 	@Override
 	protected void initialize() {
+		System.out.println("Shooter P:" + ConstantsIO.kP_Shooter);
 		RobotMap.shooter.setTargetSpeed(rpm);
 	}
 

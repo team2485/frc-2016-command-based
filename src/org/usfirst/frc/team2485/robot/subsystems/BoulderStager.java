@@ -68,8 +68,5 @@ public class BoulderStager extends Subsystem {
 
 	@Override
 	protected void initDefaultCommand() {
-		// TODO Auto-generated method stu
-		
-		setDefaultCommand(new SetBoulderStager(StagerPosition.NEUTRAL));
 	}
 }
