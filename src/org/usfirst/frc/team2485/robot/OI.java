@@ -76,11 +76,11 @@ public class OI {
         
         Btn3.whenPressed(new ShakeBoulderStager());
         
-        Btn4.whenPressed(new PrepForBatterShot());
+        //Btn4.whenPressed(new PrepForBatterShot());
         
         Btn5.whenPressed(new SpinUpShooter(0));
         
-        Btn6.whenPressed(new PrepForLongShot());
+        //Btn6.whenPressed(new PrepForLongShot());
         
         Btn7.whenPressed(new RollersOn(0, 0));
         

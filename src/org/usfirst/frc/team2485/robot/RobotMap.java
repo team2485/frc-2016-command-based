@@ -80,8 +80,11 @@ public class RobotMap {
 		shooterEnc = new Encoder(6, 7, false, EncodingType.k1X);
 		shooterEnc.setDistancePerPulse(1.0/250);
 		shooterEnc.setPIDSourceType(PIDSourceType.kRate);
-		shooterEnc.setReverseDirection(true);
-
+		
+		if (!Robot.isSimulation()) {
+			shooterEnc.setReverseDirection(true);
+		}
+		
 		if (Robot.isSimulation()) {
 			leftDriveEnc = new Encoder(2, 3);
 		} else {
@@ -106,9 +109,10 @@ public class RobotMap {
 		compressorSpike = new Relay(0);
 		pressureSwitch = new DigitalInput(10);
 
-		sonic = new Ultrasonic(0, 1);
 
-		if (!Robot.isSimulation()) {
+		if (!Robot.isSimulation()) {		
+			sonic = new Ultrasonic(0, 1);
+
 			lidar = new LidarWrapper(I2C.Port.kMXP);
 		}
 
@@ -123,8 +127,10 @@ public class RobotMap {
 		driveTrain = new DriveTrain();
 		shooter = new Shooter();
 		boulderStager = new BoulderStager();
-		boulderDetector = new BoulderDetector();
-
+		if (sonic != null) {
+			boulderDetector = new BoulderDetector();
+		}
+		
 		if (Robot.isSimulation()) {
 
 			leftDriveEnc.setDistancePerPulse(11.56 / 360.0);
