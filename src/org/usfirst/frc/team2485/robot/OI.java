@@ -45,7 +45,7 @@ public class OI {
         BtnB.whenPressed(new PrepForLowBar());
         
         BtnX.whenPressed(new IntakeBall());
-        
+                
         Button Btn1 = new JoystickButton(joystick, 1);
         
         Button Btn2 = new JoystickButton(joystick, 2);
@@ -76,11 +76,11 @@ public class OI {
         
         Btn3.whenPressed(new ShakeBoulderStager());
         
-        //Btn4.whenPressed(new PrepForBatterShot());
+        Btn4.whenPressed(new PrepForBatterShot());
         
         Btn5.whenPressed(new SpinUpShooter(0));
         
-        //Btn6.whenPressed(new PrepForLongShot());
+        Btn6.whenPressed(new PrepForLongShot());
         
         Btn7.whenPressed(new RollersOn(0, 0));
         
@@ -88,26 +88,13 @@ public class OI {
         
         Btn9.whenPressed(new IntakeArmSetSetpoint(IntakeArm.LOW_NO_INTAKE_POSITION));
         
-        
         Btn10.whenPressed(new IntakeArmSetSetpoint(IntakeArm.INTAKE_POSITION));
         
         Btn11.whenPressed(new IntakeArmSetSetpoint(IntakeArm.PORTCULLIS_POSITION));
         
         Btn12.whenPressed(new IntakeArmSetSetpoint(IntakeArm.FULL_UP_POSITION));
         
-       // Btn4.whenPressed(new );
-        
-       // Btn5.whenPressed(new );
-        
-       // Btn6.whenPressed(new );
-        
-       // BtnA.whenPressed(new );
-        
-       // BtnB.whenPressed(new );
-        
-       // BtnX.whenPressed(new );
-        
-       // BtnY.whenPressed(new );
+       
     }
     // Button button = new JoystickButton(stick, buttonNumber);
     public static final int XBOX_BTN_A = 1;
