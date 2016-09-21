@@ -1,5 +1,7 @@
 package org.usfirst.frc.team2485.robot;
 
+import org.usfirst.frc.team2485.robot.commandGroups.AutoAimAndPrep;
+import org.usfirst.frc.team2485.robot.commandGroups.Hat;
 import org.usfirst.frc.team2485.robot.commandGroups.IntakeBall;
 import org.usfirst.frc.team2485.robot.commandGroups.PrepForBatterShot;
 import org.usfirst.frc.team2485.robot.commandGroups.PrepForLongShot;
@@ -7,15 +9,21 @@ import org.usfirst.frc.team2485.robot.commandGroups.PrepForLowBar;
 import org.usfirst.frc.team2485.robot.commandGroups.ShakeBoulderStager;
 import org.usfirst.frc.team2485.robot.commandGroups.ShootHighGoal;
 import org.usfirst.frc.team2485.robot.commandGroups.ShootLowGoal;
+import org.usfirst.frc.team2485.robot.commandGroups.UnjamShooter;
+import org.usfirst.frc.team2485.robot.commands.Brake;
 import org.usfirst.frc.team2485.robot.commands.IntakeArmSetSetpoint;
+import org.usfirst.frc.team2485.robot.commands.IntakeArmWithControllers;
 import org.usfirst.frc.team2485.robot.commands.RollersOn;
+import org.usfirst.frc.team2485.robot.commands.SetBoulderStager;
 import org.usfirst.frc.team2485.robot.commands.SpinUpShooter;
+import org.usfirst.frc.team2485.robot.subsystems.BoulderStager.StagerPosition;
 import org.usfirst.frc.team2485.robot.subsystems.IntakeArm;
 import org.usfirst.frc.team2485.util.ConstantsIO;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
+import edu.wpi.first.wpilibj.command.Command;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -33,6 +41,16 @@ public class OI {
     	xBox = new Joystick(0);
     	joystick = new Joystick(1);
     	
+    	Button BtnHat = new Button() {
+			
+			@Override
+			public boolean get() {
+				return joystick.getPOV(0) != -1;
+			}
+		};
+		
+		BtnHat.whileHeld(new Hat());
+		BtnHat.whenReleased(new SetBoulderStager(StagerPosition.NEUTRAL));
     	
     	Button BtnA = new JoystickButton(xBox, XBOX_BTN_A);
         
@@ -42,10 +60,22 @@ public class OI {
         
         Button BtnY = new JoystickButton(xBox, XBOX_BTN_Y);
         
+        Button BtnLBumper = new JoystickButton(xBox, XBOX_LBUMPER);
+        
+        Command autoAim = new AutoAimAndPrep();
+        
+        BtnA.whenPressed(autoAim);
+        
         BtnB.whenPressed(new PrepForLowBar());
         
         BtnX.whenPressed(new IntakeBall());
-                
+        
+        BtnY.whenPressed(new UnjamShooter());
+        
+        BtnLBumper.cancelWhenPressed(autoAim);
+        
+        BtnLBumper.whileHeld(new Brake());
+        
         Button Btn1 = new JoystickButton(joystick, 1);
         
         Button Btn2 = new JoystickButton(joystick, 2);

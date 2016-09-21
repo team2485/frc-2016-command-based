@@ -346,8 +346,6 @@ public class WarlordsPIDController {
 		
 		double error = setpoint - sensorVal;
 		
-		System.out.println("PID ERROR: " + error);
-		
 		while (continuous& Math.abs(error) > (maxInput - minInput) / 2) {
 			if (error > 0) {
 				error -= maxInput - minInput;
@@ -393,8 +391,6 @@ public class WarlordsPIDController {
 		saturateError = result - outputPreSat;
 		
 		lastPropTerm = propTerm;
-		
-		System.out.println("Output: " + result);
 		
 		synchronized (errorBuffer) {
 			errorBuffer.add(error);

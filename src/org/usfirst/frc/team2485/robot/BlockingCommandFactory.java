@@ -107,6 +107,7 @@ public class BlockingCommandFactory {
 					driveOverDefense.addParallel(new SetHoodPosition(HoodPosition.HIGH_ANGLE));
 					driveOverDefense.addParallel(new Hat());
 					addBlockingCommand(driveOverDefense); 
+					
 					addBlockingCommand(new ResetDriveTrain());
 					addBlockingCommand(new IntakeArmSetSetpoint(IntakeArm.INTAKE_POSITION));
 					addBlockingCommand(new ShakeBoulderStager());

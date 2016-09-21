@@ -1,7 +1,6 @@
 package org.usfirst.frc.team2485.robot.commandGroups;
 
 import org.usfirst.frc.team2485.robot.commands.IntakeArmSetSetpoint;
-//import org.usfirst.frc.team2485.robot.commands.SetHoodPosition;
 import org.usfirst.frc.team2485.robot.subsystems.IntakeArm;
 import org.usfirst.frc.team2485.robot.subsystems.Shooter.HoodPosition;
 
@@ -11,7 +10,7 @@ public class PrepForLowBar extends CommandGroup {
 	
 	public PrepForLowBar() {
 		addParallel(new IntakeArmSetSetpoint(IntakeArm.LOW_NO_INTAKE_POSITION));
-//		addSequential(new SetHoodPosition(HoodPosition.STOWED));
+		addSequential(new SetHoodPosition(HoodPosition.STOWED));
 	}
 
 }

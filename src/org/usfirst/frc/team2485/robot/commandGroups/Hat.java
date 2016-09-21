@@ -8,10 +8,13 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 
 public class Hat extends CommandGroup {
 
-	public Hat(){
+	public Hat() {
+		
 		addParallel(new SetBoulderStager(StagerPosition.SHOOTING));
 		addParallel(new IntakeArmSetManual(0.2));
 		
 	}
+	
+	
 }
 
