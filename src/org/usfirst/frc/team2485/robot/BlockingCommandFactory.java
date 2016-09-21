@@ -1,6 +1,7 @@
 package org.usfirst.frc.team2485.robot;
 
 
+import org.usfirst.frc.team2485.robot.commandGroups.Hat;
 import org.usfirst.frc.team2485.robot.commandGroups.PrepForLongShot;
 import org.usfirst.frc.team2485.robot.commandGroups.SetHoodPosition;
 import org.usfirst.frc.team2485.robot.commandGroups.ShakeBoulderStager;
@@ -34,7 +35,36 @@ public class BlockingCommandFactory {
 
 			@Override
 			public void run() {
+				double distPreTurn = 150;
+				double degreesToTurn = 0.0;
+				double distPostTurn = 10;
+
+				switch (defenseLocation) {
 				
+					case 2:
+						distPreTurn = 175;
+						degreesToTurn = 40;
+						distPostTurn = 10;
+						break;
+						
+					case 3:
+						distPreTurn = 170;
+						degreesToTurn = 10;
+						distPostTurn = 0;
+						break;
+						
+					case 4:
+						distPreTurn = 165;
+						degreesToTurn = -5;
+						distPostTurn = -2;
+						break;
+						
+					case 5:
+						degreesToTurn = -30;
+						distPostTurn = 0;
+						break;
+						
+				}
 				switch (autoType) {
 				case REACH_AUTO:
 					addBlockingCommand(new DriveTo(30, 100, 0, 0));
@@ -53,8 +83,8 @@ public class BlockingCommandFactory {
 					addBlockingCommand(new ResetDriveTrain());
 							
 					CommandGroup rotateAndRaiseHood = new CommandGroup();
-					shakeAndDrive.addParallel(new CommandTimeout(new RotateTo(57), 2));
-					shakeAndDrive.addParallel(new SetHoodPosition(HoodPosition.LOW_ANGLE));
+					rotateAndRaiseHood.addParallel(new CommandTimeout(new RotateTo(57), 2));
+					rotateAndRaiseHood.addParallel(new SetHoodPosition(HoodPosition.LOW_ANGLE));
 					addBlockingCommand(rotateAndRaiseHood);
 					
 					addBlockingCommand(new ResetDriveTrain());
@@ -67,32 +97,34 @@ public class BlockingCommandFactory {
 					addBlockingCommand(new ShootHighGoal());
 					break;
 		
-//				case RAMPARTS_AUTO:
-//					if (defenseLocation == 4) {
-//						degreesToTurn = -8;
-//					}
-//					return new Sequencer(new SequencedItem[] {
-//							new SequencedMultipleItem(
-//									new DriveTo(distPreTurn, 8, 0.6), // changed to 6 seconds from 4
-//									new Hat(true),
-//									new SetHoodPosition(HoodPosition.HIGH_ANGLE)
-//								),
-//							new ResetDriveTrain(),
-//							new SetIntakeArm(Intake.INTAKE_POSITION),
-//							new ShakeBoulderStager(),
+				case RAMPARTS_AUTO:
+					if (defenseLocation == 4) {
+						degreesToTurn = -8;
+					}
+					
+					CommandGroup driveOverDefense = new CommandGroup();
+					driveOverDefense.addParallel(new CommandTimeout(new DriveTo(distPreTurn, 200, 0, 0), 8));
+					driveOverDefense.addParallel(new SetHoodPosition(HoodPosition.HIGH_ANGLE));
+					driveOverDefense.addParallel(new Hat());
+					addBlockingCommand(driveOverDefense); 
+					addBlockingCommand(new ResetDriveTrain());
+					addBlockingCommand(new IntakeArmSetSetpoint(IntakeArm.INTAKE_POSITION));
+					addBlockingCommand(new ShakeBoulderStager());
+//							
 //							new RotateTo(degreesToTurn, 3),
 //							new ResetDriveTrain(),
 //							new ZeroDriveEncoder(),
 //							new DriveTo(distPostTurn, 3, 0.65), // Approaches batter, may be
 //							// removed when long shot works
 //							new ResetDriveTrain(),
-////							new SequencedMultipleItem(
-////									new SpinUpShooter(Shooter.RPS_BATTER_SHOT), 
-////									new AlignToTower(3.0)
-////								),
-////							new ResetDriveTrain(), 
-////							new ShootHighGoal(5) 
+//							new SequencedMultipleItem(
+//									new SpinUpShooter(Shooter.RPS_BATTER_SHOT), 
+//									new AlignToTower(3.0)
+//								),
+//							new ResetDriveTrain(), 
+//							new ShootHighGoal(5) 
 //						});
+					break;
 //				case ROUGH_TERRAIN_AUTO:
 //				case MOAT_AUTO:
 //				case ROCK_WALL_AUTO:
