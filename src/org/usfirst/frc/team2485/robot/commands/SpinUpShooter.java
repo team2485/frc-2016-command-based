@@ -23,7 +23,7 @@ public class SpinUpShooter extends Command {
 
 	@Override
 	protected void initialize() {
-		System.out.println("Shooter P:" + ConstantsIO.kP_Shooter);
+//		System.out.println("Shooter P:" + ConstantsIO.kP_Shooter);
 		RobotMap.shooter.setTargetSpeed(rpm);
 	}
 

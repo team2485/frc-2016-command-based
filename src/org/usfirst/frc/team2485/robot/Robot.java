@@ -48,7 +48,7 @@ public class Robot extends IterativeRobot {
 
 	public void autonomousPeriodic() {
 		Scheduler.getInstance().run();	
-		System.out.println("ROBOT:SHOOTER ENC: " + RobotMap.shooterEnc.getRate());
+//		System.out.println("ROBOT:SHOOTER ENC: " + RobotMap.shooterEnc.getRate());
 		
 	}
 
@@ -59,7 +59,7 @@ public class Robot extends IterativeRobot {
 
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
-//		System.out.println(RobotMap.sonic.getRangeInches());
+		System.out.println("ROBOT:SONIC" + RobotMap.sonic.getRangeInches());
 	}
 
 	public void testInit(){

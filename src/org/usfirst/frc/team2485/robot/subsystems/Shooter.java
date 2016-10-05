@@ -67,6 +67,12 @@ public class Shooter extends Subsystem {
 		ratePID.setSetpoint(rpm);
 	}
 	
+	public void setManual(double pwm) {
+		if (isPIDEnabled()) {
+			ratePID.disable();
+		}
+		shooterMotors.set(pwm);
+	}
 	public void setHoodPosition (HoodPosition desiredHoodPosition) {	
 		currHoodPosition = desiredHoodPosition;
 	}

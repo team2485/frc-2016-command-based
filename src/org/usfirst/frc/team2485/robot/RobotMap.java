@@ -28,6 +28,7 @@ import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.Ultrasonic;
+import edu.wpi.first.wpilibj.Ultrasonic.Unit;
 import edu.wpi.first.wpilibj.VictorSP;
 import edu.wpi.first.wpilibj.CounterBase.EncodingType;
 
@@ -69,7 +70,9 @@ public class RobotMap {
 			leftShooterMotor = new CANTalon(3);
 			rightShooterMotor = new CANTalon(2);
 			leftShooterMotor.setInverted(true);
-			rightShooterMotor.setInverted(false);
+			rightShooterMotor.setInverted(false);			
+			intakeRollerLateralsc.setInverted(true);
+
 //			rightShooterMotor.changeControlMode(CANTalon.TalonControlMode.PercentVbus);
 //			leftShooterMotor.changeControlMode(CANTalon.TalonControlMode.PercentVbus);
 		}
@@ -111,7 +114,8 @@ public class RobotMap {
 
 
 		if (!Robot.isSimulation()) {		
-			sonic = new Ultrasonic(0, 1);
+			sonic = new Ultrasonic(0, 1, Unit.kInches);
+			sonic.setAutomaticMode(true);
 
 			lidar = new LidarWrapper(I2C.Port.kMXP);
 		}

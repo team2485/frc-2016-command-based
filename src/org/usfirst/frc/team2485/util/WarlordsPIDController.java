@@ -405,7 +405,6 @@ public class WarlordsPIDController {
 
 		@Override
 		public void run() {
-			
 			if (enabled) {
 				
 				sensorVal = source.pidGet();
