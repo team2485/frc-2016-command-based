@@ -1,17 +1,16 @@
 
 package org.usfirst.frc.team2485.robot;
 
-import javax.sound.midi.Sequencer;
+import java.util.Timer;
+import java.util.TimerTask;
 
-import org.usfirst.frc.team2485.robot.commands.DriveTo;
-import org.usfirst.frc.team2485.robot.commands.SpinUpShooter;
+import org.usfirst.frc.team2485.robot.BlockingCommandFactory.AutoType;
 import org.usfirst.frc.team2485.util.ConstantsIO;
 
-import edu.wpi.first.wpilibj.CounterBase;
+import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.Relay;
 import edu.wpi.first.wpilibj.command.Scheduler;
-import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 
 public class Robot extends IterativeRobot {
 
@@ -37,18 +36,39 @@ public class Robot extends IterativeRobot {
 
 
 		RobotMap.gyro.reset();
-		Scheduler.getInstance().add(new SpinUpShooter(85));
-
-		//        BlockingCommandFactory.advanceTo100InchReallyBadlyPlzNeverUseThis();
-
 		RobotMap.driveTrain.reset();
-//		Scheduler.getInstance().add(new DriveTo(200, 50, 0, 0)); 
+		
+		new Thread(new Runnable() {
+			
+			boolean cameraFound = false;
+
+			@Override
+			public void run() {
+
+				new Timer().schedule(new TimerTask() {
+
+					@Override
+					public void run() {
+						cameraFound = true;
+					}
+				}, 60 * 1000);
+
+				while (!cameraFound) {
+					if (!CameraServer.getInstance().isAutoCaptureStarted()) {
+						CameraServer.getInstance()
+								.startAutomaticCapture("cam0");
+						cameraFound = true;
+					}
+				}
+			}
+		}).start();
+		
+		BlockingCommandFactory.runAuto(AutoType.LOW_BAR_AUTO, 1);
 	}
 
 
 	public void autonomousPeriodic() {
 		Scheduler.getInstance().run();	
-//		System.out.println("ROBOT:SHOOTER ENC: " + RobotMap.shooterEnc.getRate());
 		
 	}
 
@@ -59,7 +79,6 @@ public class Robot extends IterativeRobot {
 
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
-		System.out.println("ROBOT:SONIC" + RobotMap.sonic.getRangeInches());
 	}
 
 	public void testInit(){
