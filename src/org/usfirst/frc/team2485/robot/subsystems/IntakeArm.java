@@ -69,9 +69,7 @@ public class IntakeArm extends Subsystem {
 	}
 
 	public double getCurrPos() {
-
 		return absEncoder.get();
-
 	}
 
 	public boolean isPIDEnabled() {

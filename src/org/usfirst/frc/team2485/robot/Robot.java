@@ -5,12 +5,14 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import org.usfirst.frc.team2485.robot.BlockingCommandFactory.AutoType;
+import org.usfirst.frc.team2485.robot.subsystems.IntakeArm;
 import org.usfirst.frc.team2485.util.ConstantsIO;
 
 import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.Relay;
 import edu.wpi.first.wpilibj.command.Scheduler;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Robot extends IterativeRobot {
 
@@ -21,7 +23,7 @@ public class Robot extends IterativeRobot {
 		RobotMap.updateConstants();
 	}
 
-	public void disabledInit(){
+	public void disabledInit() {
 		RobotMap.driveTrain.reset();
 
 	}
@@ -34,12 +36,11 @@ public class Robot extends IterativeRobot {
 		ConstantsIO.init();
 		RobotMap.updateConstants();
 
-
 		RobotMap.gyro.reset();
 		RobotMap.driveTrain.reset();
-		
+
 		new Thread(new Runnable() {
-			
+
 			boolean cameraFound = false;
 
 			@Override
@@ -55,21 +56,21 @@ public class Robot extends IterativeRobot {
 
 				while (!cameraFound) {
 					if (!CameraServer.getInstance().isAutoCaptureStarted()) {
-						CameraServer.getInstance()
-								.startAutomaticCapture("cam0");
+						CameraServer.getInstance().startAutomaticCapture("cam0");
 						cameraFound = true;
 					}
 				}
 			}
 		}).start();
-		
+
 		BlockingCommandFactory.runAuto(AutoType.LOW_BAR_AUTO, 1);
 	}
 
-
 	public void autonomousPeriodic() {
-		Scheduler.getInstance().run();	
-		
+		Scheduler.getInstance().run();
+
+		updateSmartDashboard();
+
 	}
 
 	public void teleopInit() {
@@ -79,20 +80,48 @@ public class Robot extends IterativeRobot {
 
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
+
+		updateSmartDashboard();
 	}
 
-	public void testInit(){
+	public void testInit() {
 		ConstantsIO.init();
 		RobotMap.updateConstants();
 	}
 
 	public void testPeriodic() {
-		
+
 		if (RobotMap.pressureSwitch.get()) {
 			RobotMap.compressorSpike.set(Relay.Value.kOff);
 		} else {
 			RobotMap.compressorSpike.set(Relay.Value.kForward);
 		}
-		
+
+	}
+
+	public void updateSmartDashboard() {
+
+		SmartDashboard.putNumber("Left enc vel", RobotMap.leftDriveEnc.getRate());
+
+		SmartDashboard.putNumber("Right enc vel", RobotMap.rightDriveEnc.getRate());
+
+		SmartDashboard.putNumber("Graphable RPM", RobotMap.shooter.getRate());
+
+		SmartDashboard.putString("RPM",
+				(int) (RobotMap.shooter.getRate() * 60) + "," + (int) RobotMap.shooter.getSetpoint() * 60);
+
+		SmartDashboard.putNumber("Current Error", RobotMap.shooter.getError());
+
+		SmartDashboard.putNumber("Throttle", RobotMap.shooter.getCurrentPower());
+
+		SmartDashboard.putBoolean("Boulder Detector", RobotMap.boulderDetector.hasBoulder());
+
+		/*
+		 * Expects values separated by a comma: Current Angle,Encoder Reading
+		 * for Floor,Reading for Intake,Reading for Full Up
+		 */
+		SmartDashboard.putString("Intake Arm Angle", RobotMap.intakeArm.getCurrPos() + "," + IntakeArm.FLOOR_POSITION
+				+ "," + IntakeArm.INTAKE_POSITION + "," + IntakeArm.FULL_UP_POSITION);
+
 	}
 }

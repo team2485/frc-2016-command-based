@@ -96,7 +96,10 @@ public class Shooter extends Subsystem {
 
 	public double getRate() {
 		return RobotMap.shooterEnc.getRate();
-
+	}
+	
+	public double getCurrentPower() {
+		return shooterMotors.get();
 	}
 
 	public double getError() {
