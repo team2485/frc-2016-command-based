@@ -49,8 +49,8 @@ public class Shooter extends Subsystem {
 		RPS_BATTER_SHOT = ConstantsIO.kBatterShotRPS;
 		RPS_LONG_SHOT = ConstantsIO.kLongShotRPS;
 
-		SmartDashboard.putNumber("RPS Batter Shot", RPS_BATTER_SHOT);
-		SmartDashboard.putNumber("RPS Long Shot", RPS_LONG_SHOT);
+		SmartDashboard.putNumber("Batter Shot RPS", RPS_BATTER_SHOT);
+		SmartDashboard.putNumber("Long Shot RPS", RPS_LONG_SHOT);
 
 		disableShooter();
 
@@ -122,6 +122,8 @@ public class Shooter extends Subsystem {
 	public void updateConstants() {
 		ratePID.setPID(ConstantsIO.kP_Shooter, ConstantsIO.kI_Shooter, ConstantsIO.kD_Shooter,
 				ConstantsIO.kF_Shooter);
+		
+		RPS_BATTER_SHOT = ConstantsIO.kBatterShotRPS;
+		RPS_LONG_SHOT = ConstantsIO.kLongShotRPS;
 	}
-
 }

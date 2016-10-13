@@ -5,6 +5,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import org.usfirst.frc.team2485.robot.BlockingCommandFactory.AutoType;
+import org.usfirst.frc.team2485.robot.commands.AutoAim;
 import org.usfirst.frc.team2485.robot.subsystems.IntakeArm;
 import org.usfirst.frc.team2485.util.ConstantsIO;
 
@@ -21,15 +22,21 @@ public class Robot extends IterativeRobot {
 		RobotMap.init();
 		OI.init();
 		RobotMap.updateConstants();
+		
+		SmartDashboard.putNumber("Batter Shot Target", AutoAim.BATTER_SHOT_PIXEL_TARGET);
+		SmartDashboard.putNumber("Long Shot Target", AutoAim.LONG_SHOT_PIXEL_TARGET);
 	}
 
 	public void disabledInit() {
 		RobotMap.driveTrain.reset();
+		RobotMap.shooter.disableShooter();
 
 	}
 
 	public void disabledPeriodic() {
 		Scheduler.getInstance().run();
+		
+		updateSmartDashboard();
 	}
 
 	public void autonomousInit() {
@@ -96,6 +103,8 @@ public class Robot extends IterativeRobot {
 		} else {
 			RobotMap.compressorSpike.set(Relay.Value.kForward);
 		}
+		
+		updateSmartDashboard();
 
 	}
 

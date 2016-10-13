@@ -115,6 +115,7 @@ public class DriveTrain extends Subsystem {
 	public void reset() {
 		driveToPID.disable();
 		rotateToPID.disable();
+		
 		emergencyStop();
 	}
 
@@ -263,7 +264,6 @@ public class DriveTrain extends Subsystem {
 	 */
 	public void setLeftRightVelocity(double leftOutput, double rightOutput) {
 
-		System.out.println("L" + leftOutput + "R" + rightOutput);
 		leftVelocityPID.setPID(ConstantsIO.kP_DriveVelocity,
 				ConstantsIO.kI_DriveVelocity, ConstantsIO.kD_DriveVelocity,
 				ConstantsIO.kF_DriveVelocity);
@@ -298,20 +298,22 @@ public class DriveTrain extends Subsystem {
 		RobotMap.leftDrive.set(leftOutput);
 		RobotMap.rightDrive.set(rightOutput);
 	}
-	
+
 	public void brake() {
-		
-		leftVelocityPID.setPID(ConstantsIO.kP_DriveBrake, ConstantsIO.kI_DriveBrake, 
-				ConstantsIO.kD_DriveBrake, ConstantsIO.kF_DriveBrake);
-		rightVelocityPID.setPID(ConstantsIO.kP_DriveBrake, ConstantsIO.kI_DriveBrake, 
-				ConstantsIO.kD_DriveBrake, ConstantsIO.kF_DriveBrake);
-		
+
+		leftVelocityPID.setPID(ConstantsIO.kP_DriveBrake,
+				ConstantsIO.kI_DriveBrake, ConstantsIO.kD_DriveBrake,
+				ConstantsIO.kF_DriveBrake);
+		rightVelocityPID.setPID(ConstantsIO.kP_DriveBrake,
+				ConstantsIO.kI_DriveBrake, ConstantsIO.kD_DriveBrake,
+				ConstantsIO.kF_DriveBrake);
+
 		leftVelocityPID.enable();
 		rightVelocityPID.enable();
-		
+
 		leftVelocityPID.setSetpoint(0);
 		rightVelocityPID.setSetpoint(0);
-		
+
 	}
 
 	/**
@@ -349,7 +351,6 @@ public class DriveTrain extends Subsystem {
 	public boolean driveToAndRotateTo(double inches, double startAngle,
 			double endAngle, double maxSpeed) {
 
-		System.out.println("DriveTrain:we got to here");
 		if (!driveToPID.isEnabled()) {
 			driveToPID.enable();
 			rotateToPID.enable();

@@ -37,7 +37,10 @@ public class DriveThrough extends Command{
 	protected boolean isFinished() {
 		// TODO Auto-generated method stub
 		double dist = RobotMap.driveTrain.getDist();
-		return Math.abs(dist - finishedAt) < 2.0;
+		
+		System.out.println("Dist: " + dist);
+		
+		return finishedAt - dist < 2.0;
 	}
 
 	@Override

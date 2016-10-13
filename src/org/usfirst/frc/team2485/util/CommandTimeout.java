@@ -20,7 +20,7 @@ public class CommandTimeout extends Command {
 	protected void initialize() {
 		System.out.println("Started timedCommand");
 		if (innerCommand != null) {
-			Scheduler.getInstance().add(innerCommand);
+			innerCommand.start();
 		}
 	}
 
@@ -33,11 +33,15 @@ public class CommandTimeout extends Command {
 	}
 
 	@Override
-	protected boolean isFinished() {
+	public boolean isFinished() {
 		if (innerCommand == null) {
 			return isTimedOut();
 		} else {
-			return innerCommand.isCanceled();
+			if (innerCommand.timeSinceInitialized() > 0.050) {
+				return !innerCommand.isRunning();
+			} else {
+				return false;
+			}
 		}
 	}
 
@@ -51,5 +55,10 @@ public class CommandTimeout extends Command {
 	@Override
 	protected void interrupted() {
 		end();
+	}
+	
+	@Override
+	public String toString() {
+		return super.toString() + " -> " + innerCommand;
 	}
 }

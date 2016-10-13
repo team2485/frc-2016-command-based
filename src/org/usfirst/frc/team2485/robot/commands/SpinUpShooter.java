@@ -1,9 +1,11 @@
 package org.usfirst.frc.team2485.robot.commands;
 
 import org.usfirst.frc.team2485.robot.RobotMap;
+import org.usfirst.frc.team2485.robot.subsystems.Shooter;
 import org.usfirst.frc.team2485.util.ConstantsIO;
 
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 
 public class SpinUpShooter extends Command {
@@ -23,7 +25,17 @@ public class SpinUpShooter extends Command {
 
 	@Override
 	protected void initialize() {
-//		System.out.println("Shooter P:" + ConstantsIO.kP_Shooter);
+		
+		if (rpm == Shooter.RPS_BATTER_SHOT) {
+			Shooter.RPS_BATTER_SHOT = SmartDashboard.getNumber("Batter Shot RPS");
+			rpm = Shooter.RPS_BATTER_SHOT;
+		}
+		
+		if (rpm == Shooter.RPS_LONG_SHOT) {
+			Shooter.RPS_LONG_SHOT = SmartDashboard.getNumber("Long Shot RPS");
+			rpm = Shooter.RPS_LONG_SHOT;
+		}
+		
 		RobotMap.shooter.setTargetSpeed(rpm);
 	}
 
