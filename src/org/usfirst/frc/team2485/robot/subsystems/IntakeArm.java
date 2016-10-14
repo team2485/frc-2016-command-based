@@ -35,8 +35,6 @@ public class IntakeArm extends Subsystem {
 				ConstantsIO.kI_IntakeArm, ConstantsIO.kD_IntakeArm, absEncoder,
 				armSpeedControllerWrapper);
 
-		System.out.println("ARM P-TERM: " + ConstantsIO.kP_IntakeArm);
-
 		armPID.setAbsoluteTolerance(ABSOLUTE_TOLERANCE);
 
 		armPID.setInputRange(0.0, 1.0);
@@ -81,4 +79,7 @@ public class IntakeArm extends Subsystem {
 				ConstantsIO.kD_IntakeArm);
 	}
 
+	public void reset() {
+		armPID.disable();
+	}
 }

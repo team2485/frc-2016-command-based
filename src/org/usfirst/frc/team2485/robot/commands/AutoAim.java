@@ -11,9 +11,13 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class AutoAim extends Command {
 
 	private static final double FIELD_OF_VIEW = 47.0;
+	private static final double ANGLE_TOLERANCE_BATTER = 2;
+	private static final double ANGLE_TOLERANCE_LONG = 1;
+	
 
 	public static double BATTER_SHOT_PIXEL_TARGET = 165;
 	public static double LONG_SHOT_PIXEL_TARGET = 156;
+	private boolean finished = false;
 
 	private CommandTimeout turnToCommand;
 
@@ -29,42 +33,48 @@ public class AutoAim extends Command {
 	@Override
 	protected void execute() {
 
-		if (turnToCommand == null || turnToCommand.isFinished()) {
+		if (!finished && (turnToCommand == null || turnToCommand.isFinished())) {
 
 			NetworkTable table = NetworkTable.getTable("targetCenter");
 			double targetX = table.getNumber("x", 320 / 2);
 			double targetY = table.getNumber("y", 240 / 2);
 
 			double alignmentGoal = BATTER_SHOT_PIXEL_TARGET;
-
+			double tolerance = ANGLE_TOLERANCE_BATTER;
+			
 			if (targetY > 120) {
 				alignmentGoal = LONG_SHOT_PIXEL_TARGET;
+				tolerance = ANGLE_TOLERANCE_LONG;
 			}
 
 			double angle = FIELD_OF_VIEW * (targetX - alignmentGoal) / 320;
 
-			turnToCommand = new CommandTimeout(new RotateTo(
-					RobotMap.gyro.getYaw() + angle), 1);
+			if (Math.abs(angle) < tolerance) {
+				finished = true;
+			} else {
+				turnToCommand = new CommandTimeout(new RotateTo(
+						RobotMap.gyro.getYaw() + angle), 1);
+
+				Scheduler.getInstance().add(turnToCommand);
+			}
 			
-			Scheduler.getInstance().add(turnToCommand);
 		}
 	}
 
 	@Override
 	protected boolean isFinished() {
-		// TODO Auto-generated method stub
-		return false;
+		return finished;
 	}
 
 	@Override
 	protected void end() {
-		// TODO Auto-generated method stub
-
+		if (turnToCommand != null && turnToCommand.isRunning()) {
+			turnToCommand.cancel();
+		}
 	}
 
 	@Override
 	protected void interrupted() {
-		// TODO Auto-generated method stub
-
+		end();
 	}
 }

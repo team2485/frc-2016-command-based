@@ -66,6 +66,12 @@ public class BoulderStager extends Subsystem {
 		}
 	}
 
+	public void reset() {
+		solenoid1.set(false);
+		solenoid2.set(false);
+		position = StagerPosition.NEUTRAL;
+	}
+	
 	@Override
 	protected void initDefaultCommand() {
 	}

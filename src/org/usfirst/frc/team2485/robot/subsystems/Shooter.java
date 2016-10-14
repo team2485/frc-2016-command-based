@@ -126,4 +126,11 @@ public class Shooter extends Subsystem {
 		RPS_BATTER_SHOT = ConstantsIO.kBatterShotRPS;
 		RPS_LONG_SHOT = ConstantsIO.kLongShotRPS;
 	}
+	
+	public void reset() {
+		disableShooter();
+		RobotMap.upperShooterHoodSolenoid.set(false);
+		RobotMap.lowerShooterHoodSolenoid.set(false);
+		currHoodPosition = DEFAULT_HOOD_POSITION;
+	}
 }

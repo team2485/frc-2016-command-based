@@ -29,8 +29,9 @@ public class Robot extends IterativeRobot {
 
 	public void disabledInit() {
 		RobotMap.driveTrain.reset();
-		RobotMap.shooter.disableShooter();
-
+		RobotMap.shooter.reset();
+		RobotMap.intakeArm.reset();
+		RobotMap.boulderStager.reset(); 
 	}
 
 	public void disabledPeriodic() {
@@ -46,6 +47,7 @@ public class Robot extends IterativeRobot {
 		RobotMap.gyro.reset();
 		RobotMap.driveTrain.reset();
 
+		
 		new Thread(new Runnable() {
 
 			boolean cameraFound = false;
