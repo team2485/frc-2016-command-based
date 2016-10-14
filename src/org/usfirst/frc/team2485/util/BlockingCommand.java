@@ -50,7 +50,6 @@ public abstract class BlockingCommand extends Command {
 		curCommand = command;
 		Scheduler.getInstance().add(command);
 		
-		System.out.println(System.currentTimeMillis() + " added: " + command + " : " + command.hashCode());
 		
 		try {
 			Thread.sleep(50);
@@ -59,14 +58,12 @@ public abstract class BlockingCommand extends Command {
 		}
 
 		while (command.isRunning()) {
-			System.out.println(System.currentTimeMillis() + " running: " + command+ " : " + command.hashCode());
 			try {
 				Thread.sleep(20);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
 		}
-		System.out.println(System.currentTimeMillis() + " ended: " + command+ " : " + command.hashCode());
 	}
 	
 }

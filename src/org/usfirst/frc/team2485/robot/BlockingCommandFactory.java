@@ -102,7 +102,6 @@ public class BlockingCommandFactory {
 					addBlockingCommand(new CommandTimeout(2));
 					addBlockingCommand(new ShootHighGoal());
 					
-					System.out.println("end");
 					
 					break;
 
@@ -290,7 +289,6 @@ public class BlockingCommandFactory {
 
 		Scheduler.getInstance().add(command);
 		
-		System.out.println(System.currentTimeMillis() + " added: " + command + " : " + command.hashCode());
 		
 		try {
 			Thread.sleep(50);
@@ -299,13 +297,11 @@ public class BlockingCommandFactory {
 		}
 
 		while (command.isRunning()) {
-			System.out.println(System.currentTimeMillis() + " running: " + command+ " : " + command.hashCode());
 			try {
 				Thread.sleep(20);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
 		}
-		System.out.println(System.currentTimeMillis() + " ended: " + command+ " : " + command.hashCode());
 	}
 }

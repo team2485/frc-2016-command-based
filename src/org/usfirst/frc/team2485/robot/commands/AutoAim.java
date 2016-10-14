@@ -23,7 +23,7 @@ public class AutoAim extends Command {
 
 	@Override
 	protected void initialize() {
-		System.out.println("Starting auto aim");
+		System.out.println("AutoAim:Starting");
 
 		BATTER_SHOT_PIXEL_TARGET = SmartDashboard
 				.getNumber("Batter Shot Target");
