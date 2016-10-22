@@ -1,14 +1,10 @@
 package org.usfirst.frc.team2485.robot.subsystems;
 
-import java.util.Timer;
-import java.util.TimerTask;
-
 import org.usfirst.frc.team2485.robot.RobotMap;
 import org.usfirst.frc.team2485.util.ConstantsIO;
 import org.usfirst.frc.team2485.util.SpeedControllerWrapper;
 import org.usfirst.frc.team2485.util.WarlordsPIDController;
 
-import edu.wpi.first.wpilibj.CANTalon;
 import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;

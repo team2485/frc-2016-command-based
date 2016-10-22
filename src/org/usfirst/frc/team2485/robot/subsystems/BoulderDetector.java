@@ -1,10 +1,5 @@
 package org.usfirst.frc.team2485.robot.subsystems;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Timer;
-import java.util.TimerTask;
-
 import org.usfirst.frc.team2485.robot.RobotMap;
 import org.usfirst.frc.team2485.robot.commandGroups.ShakeBoulderStager;
 import org.usfirst.frc.team2485.robot.commands.RollersOn;

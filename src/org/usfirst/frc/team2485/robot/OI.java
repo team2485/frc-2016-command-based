@@ -11,7 +11,6 @@ import org.usfirst.frc.team2485.robot.commandGroups.ShootHighGoal;
 import org.usfirst.frc.team2485.robot.commandGroups.ShootLowGoal;
 import org.usfirst.frc.team2485.robot.commands.Brake;
 import org.usfirst.frc.team2485.robot.commands.IntakeArmSetSetpoint;
-import org.usfirst.frc.team2485.robot.commands.IntakeArmWithControllers;
 import org.usfirst.frc.team2485.robot.commands.RollersOn;
 import org.usfirst.frc.team2485.robot.commands.SetBoulderStager;
 import org.usfirst.frc.team2485.robot.commands.SetShooterManual;
@@ -19,7 +18,6 @@ import org.usfirst.frc.team2485.robot.commands.SpinUpShooter;
 import org.usfirst.frc.team2485.robot.subsystems.BoulderStager.StagerPosition;
 import org.usfirst.frc.team2485.robot.subsystems.IntakeArm;
 import org.usfirst.frc.team2485.util.CommandTimeout;
-import org.usfirst.frc.team2485.util.ConstantsIO;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;

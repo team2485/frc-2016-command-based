@@ -2,7 +2,6 @@ package org.usfirst.frc.team2485.util;
 
 import java.util.Arrays;
 
-import edu.wpi.first.wpilibj.CANSpeedController;
 import edu.wpi.first.wpilibj.SpeedController;
 
 /**

@@ -1,7 +1,6 @@
 package org.usfirst.frc.team2485.robot.subsystems;
 
 import org.usfirst.frc.team2485.robot.OI;
-import org.usfirst.frc.team2485.robot.Robot;
 import org.usfirst.frc.team2485.robot.RobotMap;
 import org.usfirst.frc.team2485.robot.commands.DriveWithControllers;
 import org.usfirst.frc.team2485.util.ConstantsIO;
@@ -9,7 +8,6 @@ import org.usfirst.frc.team2485.util.DummyOutput;
 import org.usfirst.frc.team2485.util.MultipleEncoderWrapper;
 import org.usfirst.frc.team2485.util.MultipleEncoderWrapper.MultipleEncoderWrapperMode;
 import org.usfirst.frc.team2485.util.RampRate;
-import org.usfirst.frc.team2485.util.SpeedControllerWrapper;
 import org.usfirst.frc.team2485.util.ThresholdHandler;
 import org.usfirst.frc.team2485.util.WarlordsPIDController;
 

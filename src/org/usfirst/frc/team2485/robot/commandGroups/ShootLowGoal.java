@@ -1,7 +1,6 @@
 package org.usfirst.frc.team2485.robot.commandGroups;
 
 import org.usfirst.frc.team2485.robot.RobotMap;
-import org.usfirst.frc.team2485.robot.commands.IntakeArmSetManual;
 import org.usfirst.frc.team2485.robot.commands.IntakeArmSetSetpoint;
 import org.usfirst.frc.team2485.robot.commands.RollersOn;
 import org.usfirst.frc.team2485.robot.commands.SetBoulderStager;

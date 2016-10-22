@@ -1,9 +1,4 @@
-package org.usfirst.frc.team2485.util;
-
-import org.usfirst.frc.team2485.robot.BlockingCommandFactory;
-
-import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.command.Scheduler;
+package edu.wpi.first.wpilibj.command;
 
 public abstract class BlockingCommand extends Command {
 
@@ -32,11 +27,12 @@ public abstract class BlockingCommand extends Command {
 		return !blockingCommandThread.isAlive();
 	}
 
+	@SuppressWarnings("deprecation")
 	@Override
 	protected void end() {
 		blockingCommandThread.stop();
-		if (curCommand != null && curCommand.isCanceled()) {
-				curCommand.cancel();
+		if (curCommand != null && !curCommand.isCanceled()) {
+			curCommand.cancel();
 		}
 	}
 
@@ -45,19 +41,20 @@ public abstract class BlockingCommand extends Command {
 		end();
 	}
 	
-	public void addBlockingCommand(Command command) {
+	public void addBlockingCommand(Command... commands) {
 		
-		curCommand = command;
-		Scheduler.getInstance().add(command);
-		
-		
-		try {
-			Thread.sleep(50);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
+		CommandGroup commandGroup = new CommandGroup();
+		for (Command c : commands) {
+			commandGroup.addParallel(c);
 		}
-
-		while (command.isRunning()) {
+		
+		curCommand = commandGroup;
+		curCommand.startRunning(); // sets running to true
+		while (curCommand != null) {
+			if (!curCommand.run()) { // runs init if not initialized and execute regardless
+				curCommand.removed(); // runs end if finished and interrupted if cancelled
+				curCommand = null;
+			}
 			try {
 				Thread.sleep(20);
 			} catch (InterruptedException e) {

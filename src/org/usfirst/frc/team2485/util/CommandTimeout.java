@@ -1,7 +1,6 @@
 package org.usfirst.frc.team2485.util;
 
 import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.command.Scheduler;
 
 public class CommandTimeout extends Command {
 
