@@ -9,7 +9,6 @@ import org.usfirst.frc.team2485.robot.commandGroups.PrepForLowBar;
 import org.usfirst.frc.team2485.robot.commandGroups.ShakeBoulderStager;
 import org.usfirst.frc.team2485.robot.commandGroups.ShootHighGoal;
 import org.usfirst.frc.team2485.robot.commandGroups.ShootLowGoal;
-import org.usfirst.frc.team2485.robot.commands.Brake;
 import org.usfirst.frc.team2485.robot.commands.IntakeArmSetSetpoint;
 import org.usfirst.frc.team2485.robot.commands.RollersOn;
 import org.usfirst.frc.team2485.robot.commands.SetBoulderStager;
@@ -73,7 +72,6 @@ public class OI {
         
         BtnLBumper.cancelWhenPressed(autoAim);
         
-        BtnLBumper.whileHeld(new Brake());
         
         Button Btn1 = new JoystickButton(joystick, 1);
         

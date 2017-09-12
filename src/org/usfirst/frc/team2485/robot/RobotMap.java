@@ -13,8 +13,9 @@ import org.usfirst.frc.team2485.util.InvertedAbsoluteEncoder;
 import org.usfirst.frc.team2485.util.LidarWrapper;
 import org.usfirst.frc.team2485.util.SpeedControllerWrapper;
 
+import com.ctre.CANTalon;
+
 import edu.wpi.first.wpilibj.AnalogPotentiometer;
-import edu.wpi.first.wpilibj.CANTalon;
 import edu.wpi.first.wpilibj.CounterBase.EncodingType;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Encoder;
@@ -49,8 +50,7 @@ public class RobotMap {
 					new Talon(scIntakeArmPort1));
 			rightDrive = new SpeedControllerWrapper(new Talon(5));
 			leftDrive = new SpeedControllerWrapper(new Talon(2));
-			leftShooterMotor = new Talon(13);
-			rightShooterMotor = new Talon(12);
+			shooterMotor = new Talon(13);
 		} else {
 			intakeRollerLateralsc = new VictorSP(scLateralRollerPort);
 			intakeRollerIntakesc = new VictorSP(scIntakeRollerPort);
@@ -63,10 +63,7 @@ public class RobotMap {
 			intakeArmSC = new SpeedControllerWrapper(intakeArmVictorSP);
 			rightDrive = new SpeedControllerWrapper(rightDriveVictorSPs);
 			leftDrive = new SpeedControllerWrapper(leftDriveVictorSPs);
-			leftShooterMotor = new CANTalon(3);
-			rightShooterMotor = new CANTalon(2);
-			leftShooterMotor.setInverted(true);
-			rightShooterMotor.setInverted(false);			
+			shooterMotor = new VictorSP(0);
 			intakeRollerLateralsc.setInverted(true);
 
 //			rightShooterMotor.changeControlMode(CANTalon.TalonControlMode.PercentVbus);
@@ -170,7 +167,7 @@ public class RobotMap {
 	public static VictorSP intakeArmVictorSP;
 	public static VictorSP[] rightDriveVictorSPs;
 	public static VictorSP[] leftDriveVictorSPs;
-	public static SpeedController leftShooterMotor, rightShooterMotor;
+	public static SpeedController shooterMotor;
 
 	public static SpeedControllerWrapper intakeArmSC;
 	public static SpeedControllerWrapper rightDrive;

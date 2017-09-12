@@ -96,11 +96,10 @@ public class SpeedControllerWrapper implements SpeedController {
 		return sum / speedControllerList.length;
 	}
 
-	@Override
 	public void set(double speed, byte syncGroup) {
 		speed = rampAndMonitorCurrent(speed);
 		for (int i = 0; i < speedControllerList.length; i++) {
-			speedControllerList[i].set(speed * scaleFactors[i], syncGroup);
+			speedControllerList[i].set(speed * scaleFactors[i]);
 		}
 	}
 

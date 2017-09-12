@@ -32,8 +32,7 @@ public class Shooter extends Subsystem {
 
 	public Shooter() {
 
-		shooterMotors = new SpeedControllerWrapper(new SpeedController[] { RobotMap.leftShooterMotor, 
-				RobotMap.rightShooterMotor });
+		shooterMotors = new SpeedControllerWrapper(new SpeedController[] { RobotMap.shooterMotor });
 
 		ratePID = new WarlordsPIDController(ConstantsIO.kP_Shooter, ConstantsIO.kI_Shooter, ConstantsIO.kD_Shooter,
 				ConstantsIO.kF_Shooter, RobotMap.shooterRateEncoder, shooterMotors);

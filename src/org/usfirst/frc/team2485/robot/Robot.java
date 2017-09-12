@@ -63,12 +63,12 @@ public class Robot extends IterativeRobot {
 					}
 				}, 60 * 1000);
 
-				while (!cameraFound) {
-					if (!CameraServer.getInstance().isAutoCaptureStarted()) {
-						CameraServer.getInstance().startAutomaticCapture("cam0");
-						cameraFound = true;
-					}
-				}
+//				while (!cameraFound) {
+//					if (!((Object) CameraServer.getInstance()).isAutoCaptureStarted()) {
+//						CameraServer.getInstance().startAutomaticCapture("cam0", 0);
+//						cameraFound = true;
+//					}
+//				}
 			}
 		}).start();
 

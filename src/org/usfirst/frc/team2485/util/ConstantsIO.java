@@ -27,7 +27,6 @@ public class ConstantsIO {
 	public static double kP_Shooter, kI_Shooter, kD_Shooter, kF_Shooter;
 	public static double kP_DriveTo, kI_DriveTo, kD_DriveTo;
 	public static double kP_DriveVelocity, kI_DriveVelocity, kD_DriveVelocity, kF_DriveVelocity;
-	public static double kP_DriveBrake, kI_DriveBrake, kD_DriveBrake, kF_DriveBrake;
 	public static double kP_Rotate, kI_Rotate, kD_Rotate;
 	public static double kP_IntakeArm, kI_IntakeArm, kD_IntakeArm;
 
@@ -83,11 +82,6 @@ public class ConstantsIO {
 		kI_DriveVelocity = Double.parseDouble(data.get("kI_DriveVelocity"));
 		kD_DriveVelocity = Double.parseDouble(data.get("kD_DriveVelocity"));
 		kF_DriveVelocity = Double.parseDouble(data.get("kF_DriveVelocity"));
-		
-		kP_DriveBrake = Double.parseDouble(data.get("kP_DriveBrake"));
-		kI_DriveBrake = Double.parseDouble(data.get("kI_DriveBrake"));
-		kD_DriveBrake = Double.parseDouble(data.get("kD_DriveBrake"));
-		kF_DriveBrake = Double.parseDouble(data.get("kF_DriveBrake"));
 
 		kDriveVoltageRamp = Double.parseDouble(data.get("kDriveVoltageRamp"));
 		kDriveVelocityUpRamp = Double.parseDouble(data.get("kDriveVelocityUpRamp"));

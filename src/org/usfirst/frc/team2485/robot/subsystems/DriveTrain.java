@@ -297,22 +297,7 @@ public class DriveTrain extends Subsystem {
 		RobotMap.rightDrive.set(rightOutput);
 	}
 
-	public void brake() {
 
-		leftVelocityPID.setPID(ConstantsIO.kP_DriveBrake,
-				ConstantsIO.kI_DriveBrake, ConstantsIO.kD_DriveBrake,
-				ConstantsIO.kF_DriveBrake);
-		rightVelocityPID.setPID(ConstantsIO.kP_DriveBrake,
-				ConstantsIO.kI_DriveBrake, ConstantsIO.kD_DriveBrake,
-				ConstantsIO.kF_DriveBrake);
-
-		leftVelocityPID.enable();
-		rightVelocityPID.enable();
-
-		leftVelocityPID.setSetpoint(0);
-		rightVelocityPID.setSetpoint(0);
-
-	}
 
 	/**
 	 * Stops both drive motors, overwriting voltage ramping

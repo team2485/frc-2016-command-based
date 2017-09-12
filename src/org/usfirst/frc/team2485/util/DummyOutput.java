@@ -16,7 +16,6 @@ public class DummyOutput implements SpeedController {
         return output;
     }
 
-    @Override
     public void set(double speed, byte syncGroup) {
         set(speed);
     }
